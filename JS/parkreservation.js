@@ -1,85 +1,24 @@
 const establishments = [
-            {
-                id: 1,
-                name: "Grand Plaza Hotel",
-                type: "Hotel",
-                location: "Downtown",
-                address: "123 Main Street, Downtown",
-                totalSpots: 150,
-                availableSpots: 42,
-                pricePerHour: 8
-            },
-            {
-                id: 2,
-                name: "Skyline Conference Center",
-                type: "Conference Center",
-                location: "Business District",
-                address: "456 Business Ave, Business District",
-                totalSpots: 300,
-                availableSpots: 87,
-                pricePerHour: 6
-            },
-            {
-                id: 3,
-                name: "Oceanview Resort",
-                type: "Hotel",
-                location: "Waterfront",
-                address: "789 Ocean Drive, Waterfront",
-                totalSpots: 200,
-                availableSpots: 5,
-                pricePerHour: 12
-            },
-            {
-                id: 4,
-                name: "Metropolitan Event Hall",
-                type: "Event Venue",
-                location: "Downtown",
-                address: "321 Event Plaza, Downtown",
-                totalSpots: 180,
-                availableSpots: 34,
-                pricePerHour: 10
-            },
-            {
-                id: 5,
-                name: "Airport Suites Hotel",
-                type: "Hotel",
-                location: "Airport Area",
-                address: "555 Airport Blvd, Airport Area",
-                totalSpots: 120,
-                availableSpots: 67,
-                pricePerHour: 5
-            },
-            {
-                id: 6,
-                name: "Fine Dining Restaurant",
-                type: "Restaurant",
-                location: "Downtown",
-                address: "888 Gourmet Street, Downtown",
-                totalSpots: 50,
-                availableSpots: 0,
-                pricePerHour: 15
-            },
-            {
-                id: 7,
-                name: "Business Park Hotel",
-                type: "Hotel",
-                location: "Business District",
-                address: "999 Corporate Way, Business District",
-                totalSpots: 100,
-                availableSpots: 23,
-                pricePerHour: 7
-            },
-            {
-                id: 8,
-                name: "Celebration Banquet Hall",
-                type: "Event Venue",
-                location: "Waterfront",
-                address: "777 Celebration Ave, Waterfront",
-                totalSpots: 250,
-                availableSpots: 156,
-                pricePerHour: 9
-            }
-        ];
+  {
+    "id": "prc", // unique identifier (string)
+    "name": "Professional Regulation Commission", // establishment name
+    "type": "Government Building", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
+    "lat": 14.604666720206733, // latitude (number)
+    "lng": 120.98808379421557, // longitude (number)
+    "image": "Images/prcmain.jpg", // main image URL
+    "address": "JX3Q+W9X, P. Paredes, Nicanor Reyes St, Sampaloc, Manila, 1008 Metro Manila", // full address
+    "phone": "23100026", // contact number
+    "hours": "Mon-Fri: 8:00 AM - 5:00 PM",
+    "description": "The Professional Regulation Commission (PRC) administers, implements, and enforces the regulatory laws and policies of the country with respect to the regulation and licensing of the various professions and occupations under its jurisdiction.", // brief description
+    "amenities": ["Restroom"], // array of strings describing features
+    "parkingType": "general", // category like 'general', 'VIP', 'reserved', etc.
+    "parking": {
+      "available": true, // boolean
+      "spaces": 45, // number of spaces
+      "type": "Free parking", // description (e.g., "Free parking with validation")
+      "image": "Images/prcpark.jpeg" // parking image URL
+    }
+  }];
 
         let currentEstablishment = null;
         let reservations = [];
@@ -110,7 +49,6 @@ const establishments = [
             noResults.style.display = 'none';
             
             container.innerHTML = establishmentsToRender.map(establishment => {
-                const occupiedSpots = establishment.totalSpots - establishment.availableSpots;
                 const isFullyBooked = establishment.availableSpots === 0;
                 const isLimited = establishment.availableSpots <= 10 && !isFullyBooked;
                 
@@ -146,16 +84,6 @@ const establishments = [
                                 </div>
                                 
                                 <div class="parking-stats mb-3">
-                                    <div class="row text-center">
-                                        <div class="col-6">
-                                            <span class="stat-number text-available">${establishment.availableSpots}</span>
-                                            <small class="text-muted d-block">Available</small>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="stat-number text-occupied">${occupiedSpots}</span>
-                                            <small class="text-muted d-block">Occupied</small>
-                                        </div>
-                                    </div>
                                     <hr class="my-2">
                                     <div class="text-center price-display">
                                         $${establishment.pricePerHour}/hour

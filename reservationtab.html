@@ -3,263 +3,700 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserve a slot!</title>
-    
-    <!-- Bootstrap CSS + Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    
+    <title>ParkEasy - Hotel & Venue Parking Reservations</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            color: #333;
         }
-        
-        .hero-section {
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
             color: white;
-            text-align: center;
-            padding: 2rem 0;
         }
-        
-        .hero-title {
-            font-size: 3rem;
-            font-weight: bold;
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-top: 100px;
-            margin-bottom: 1rem;
         }
 
-        header{
-            z-index: 2;
-            background-color: #3e8ede;
-            padding: 10px;
-            padding-left: 30px;
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
             width: 100%;
-            height: 5em;
-            vertical-align: middle;
-            position:fixed;
-        }
-
-        header p{
-            font-weight: bold;
-        }
-
-        header button{
-            float: right;
-        }
-
-        .switchback{
-            text-align: center;
-            float:right;
-        }
-
-        .switchback button{
-            width: 300px;
-        }
-        
-        .establishment-card {
+            padding: 15px 50px 15px 20px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
             transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            outline: none;
         }
-        
-        .establishment-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
         }
-        
-        .card-top-border {
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .filter-group select {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .establishments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .establishment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .establishment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
             height: 4px;
             background: linear-gradient(90deg, #667eea, #764ba2);
         }
-        
-        .parking-stats {
-            background: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1rem;
+
+        .establishment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
-        
+
+        .establishment-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .establishment-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .establishment-type {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .establishment-info {
+            margin-bottom: 20px;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .location-icon {
+            margin-right: 8px;
+            color: #667eea;
+        }
+
+        .parking-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .parking-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.8em;
             font-weight: bold;
             display: block;
         }
-        
-        .text-available {
+
+        .available {
             color: #28a745;
         }
-        
-        .text-occupied {
+
+        .occupied {
             color: #dc3545;
         }
-        
-        .price-display {
-            font-size: 1.25rem;
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .price {
+            font-size: 1.2em;
             font-weight: bold;
             color: #667eea;
+            text-align: center;
         }
-        
-        .gradient-btn {
+
+        .reserve-btn {
+            width: 100%;
+            padding: 12px;
             background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
             border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
-        
-        .gradient-btn:hover {
+
+        .reserve-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        
-        @media (max-width: 750px) {
-            .hero-title {
-                font-size: 2rem;
+
+        .reserve-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 1.2em;
+            margin-top: 50px;
+        }
+
+        .reservation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .establishments-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <span class="fs-1">TigerBytes</span>
-        <button type="button" class="btn"><i class="bi bi-person-circle h1"></i></button>
-    </header>
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <h1 class="hero-title">Reserve a parking spot!</h1>
-            <p class="lead">Find and Reserve Parking at Hotels & Venues</p>
-        </div>
-    </section>
+    <div class="container">
+        <header class="header">
+            <h1>🅿️ ParkEasy</h1>
+            <p>Find and Reserve Parking at Hotels & Venues</p>
+        </header>
 
-    <!-- Main Content -->
-    <div class="main container pb-5">
-        <!-- Search and Filters Card -->
-        <div class="card shadow-lg mb-4">
-            <div class="card-body">
-                <!-- Search Box -->
-                <div class="mb-4">
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text bg-light">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input type="text" id="searchInput" class="form-control" 
-                               placeholder="Search hotels, venues, or locations...">
-                    </div>
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search hotels, venues, or locations...">
+                <span class="search-icon">🔍</span>
+            </div>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="typeFilter">Type</label>
+                    <select id="typeFilter">
+                        <option value="">All Types</option>
+                        <option value="Hotel">Hotels</option>
+                        <option value="Event Venue">Event Venues</option>
+                        <option value="Conference Center">Conference Centers</option>
+                        <option value="Restaurant">Restaurants</option>
+                    </select>
                 </div>
                 
-                <!-- Filters -->
-                <div class="row g-3">
-                    
-                    <div class="col-md-4">
-                        <label for="availabilityFilter" class="form-label fw-bold">Availability</label>
-                        <select id="availabilityFilter" class="form-select">
-                            <option value="">All</option>
-                            <option value="available">Available Now</option>
-                            <option value="limited">Limited Spots</option>
-                        </select>
-                    </div>
-
-                    <div class="switchback col mt-5">
-                        <button type="button" class="btn btn-primary" style="background: linear-gradient(135deg, #667eea, #764ba2);">General Parkings</button>
-                    </div>
+                <div class="filter-group">
+                    <label for="locationFilter">Location</label>
+                    <select id="locationFilter">
+                        <option value="">All Locations</option>
+                        <option value="Downtown">Downtown</option>
+                        <option value="Business District">Business District</option>
+                        <option value="Airport Area">Airport Area</option>
+                        <option value="Waterfront">Waterfront</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="availabilityFilter">Availability</label>
+                    <select id="availabilityFilter">
+                        <option value="">All</option>
+                        <option value="available">Available Now</option>
+                        <option value="limited">Limited Spots</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <!-- Establishments -->
-        <div id="establishmentsContainer" class="row g-4">
+        <div id="establishmentsContainer" class="establishments-grid">
             <!-- Establishments will be populated here -->
         </div>
 
-        <!-- No Results -->
-        <div id="noResults" class="text-center text-white mt-5" style="display: none;">
-            <div class="display-6 mb-3">
-                <i class="bi bi-search"></i>
-            </div>
-            <h3>No establishments found</h3>
-            <p class="lead">Try adjusting your search criteria or filters.</p>
+        <div id="noResults" class="no-results" style="display: none;">
+            <p>No establishments found matching your criteria.</p>
         </div>
     </div>
 
     <!-- Reservation Modal -->
-    <div class="modal fade" id="reservationModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">
-                        <i class="bi bi-calendar-check me-2"></i>
-                        Reserve Parking Spot
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+    <div id="reservationModal" class="reservation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reserve Parking Spot</h2>
+                <p id="modalEstablishmentName"></p>
+            </div>
+            <form class="modal-form" id="reservationForm">
+                <div class="form-group">
+                    <label for="customerName">Full Name</label>
+                    <input type="text" id="customerName" required>
                 </div>
-                
-                <div class="modal-body">
-                    <div class="alert alert-info">
-                        <i class="bi bi-info-circle me-2"></i>
-                        <span id="modalEstablishmentName" class="fw-bold"></span>
-                    </div>
-                    
-                    <form id="reservationForm">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="customerName" class="form-label">Full Name *</label>
-                                <input type="text" class="form-control" id="customerName" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="customerEmail" class="form-label">Email *</label>
-                                <input type="email" class="form-control" id="customerEmail" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="customerPhone" class="form-label">Phone Number *</label>
-                                <input type="tel" class="form-control" id="customerPhone" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="vehiclePlate" class="form-label">License Plate *</label>
-                                <input type="text" class="form-control" id="vehiclePlate" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="arrivalDate" class="form-label">Arrival Date *</label>
-                                <input type="date" class="form-control" id="arrivalDate" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="arrivalTime" class="form-label">Arrival Time *</label>
-                                <input type="time" class="form-control" id="arrivalTime" required>
-                            </div>
-                            
-                            <div class="col-12">
-                                <label for="duration" class="form-label">Duration *</label>
-                                <select class="form-select" id="duration" required>
-                                    <option value="">Select duration</option>
-                                    <option value="1">1 hour</option>
-                                    <option value="2">2 hours</option>
-                                    <option value="4">4 hours</option>
-                                    <option value="8">8 hours</option>
-                                    <option value="24">24 hours</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail" required>
                 </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle me-1"></i>Cancel
-                    </button>
-                    <button type="button" class="btn btn-success" onclick="confirmReservation()">
-                        <i class="bi bi-check-circle me-1"></i>Confirm Reservation
-                    </button>
+                <div class="form-group">
+                    <label for="customerPhone">Phone Number</label>
+                    <input type="tel" id="customerPhone" required>
                 </div>
+                <div class="form-group">
+                    <label for="vehiclePlate">License Plate</label>
+                    <input type="text" id="vehiclePlate" required>
+                </div>
+                <div class="form-group">
+                    <label for="arrivalDate">Arrival Date</label>
+                    <input type="date" id="arrivalDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="arrivalTime">Arrival Time</label>
+                    <input type="time" id="arrivalTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration (hours)</label>
+                    <select id="duration" required>
+                        <option value="">Select duration</option>
+                        <option value="1">1 hour</option>
+                        <option value="2">2 hours</option>
+                        <option value="4">4 hours</option>
+                        <option value="8">8 hours</option>
+                        <option value="24">24 hours</option>
+                    </select>
+                </div>
+            </form>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn confirm-btn" onclick="confirmReservation()">Confirm Reservation</button>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    
-    <script src="JS/parkreservation.js">
+    <script>
+        // Sample data for establishments
+        const establishments = [
+            {
+                id: 1,
+                name: "Grand Plaza Hotel",
+                type: "Hotel",
+                location: "Downtown",
+                address: "123 Main Street, Downtown",
+                totalSpots: 150,
+                availableSpots: 42,
+                pricePerHour: 8
+            },
+            {
+                id: 2,
+                name: "Skyline Conference Center",
+                type: "Conference Center",
+                location: "Business District",
+                address: "456 Business Ave, Business District",
+                totalSpots: 300,
+                availableSpots: 87,
+                pricePerHour: 6
+            },
+            {
+                id: 3,
+                name: "Oceanview Resort",
+                type: "Hotel",
+                location: "Waterfront",
+                address: "789 Ocean Drive, Waterfront",
+                totalSpots: 200,
+                availableSpots: 5,
+                pricePerHour: 12
+            },
+            {
+                id: 4,
+                name: "Metropolitan Event Hall",
+                type: "Event Venue",
+                location: "Downtown",
+                address: "321 Event Plaza, Downtown",
+                totalSpots: 180,
+                availableSpots: 34,
+                pricePerHour: 10
+            },
+            {
+                id: 5,
+                name: "Airport Suites Hotel",
+                type: "Hotel",
+                location: "Airport Area",
+                address: "555 Airport Blvd, Airport Area",
+                totalSpots: 120,
+                availableSpots: 67,
+                pricePerHour: 5
+            },
+            {
+                id: 6,
+                name: "Fine Dining Restaurant",
+                type: "Restaurant",
+                location: "Downtown",
+                address: "888 Gourmet Street, Downtown",
+                totalSpots: 50,
+                availableSpots: 0,
+                pricePerHour: 15
+            },
+            {
+                id: 7,
+                name: "Business Park Hotel",
+                type: "Hotel",
+                location: "Business District",
+                address: "999 Corporate Way, Business District",
+                totalSpots: 100,
+                availableSpots: 23,
+                pricePerHour: 7
+            },
+            {
+                id: 8,
+                name: "Celebration Banquet Hall",
+                type: "Event Venue",
+                location: "Waterfront",
+                address: "777 Celebration Ave, Waterfront",
+                totalSpots: 250,
+                availableSpots: 156,
+                pricePerHour: 9
+            }
+        ];
+
+        let currentEstablishment = null;
+        let reservations = [];
+
+        function renderEstablishments(establishmentsToRender = establishments) {
+            const container = document.getElementById('establishmentsContainer');
+            const noResults = document.getElementById('noResults');
+            
+            if (establishmentsToRender.length === 0) {
+                container.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            container.innerHTML = establishmentsToRender.map(establishment => {
+                const occupiedSpots = establishment.totalSpots - establishment.availableSpots;
+                const availabilityStatus = establishment.availableSpots === 0 ? 'full' : 
+                                         establishment.availableSpots <= 10 ? 'limited' : 'available';
+                
+                return `
+                    <div class="establishment-card">
+                        <div class="establishment-header">
+                            <div>
+                                <div class="establishment-name">${establishment.name}</div>
+                                <span class="establishment-type">${establishment.type}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="establishment-info">
+                            <div class="location">
+                                <span class="location-icon">📍</span>
+                                <span>${establishment.address}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="parking-info">
+                            <div class="parking-stats">
+                                <div class="stat">
+                                    <span class="stat-number available">${establishment.availableSpots}</span>
+                                    <span class="stat-label">Available</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number occupied">${occupiedSpots}</span>
+                                    <span class="stat-label">Occupied</span>
+                                </div>
+                            </div>
+                            <div class="price">$${establishment.pricePerHour}/hour</div>
+                        </div>
+                        
+                        <button class="reserve-btn" 
+                                ${establishment.availableSpots === 0 ? 'disabled' : ''}
+                                onclick="openReservationModal(${establishment.id})">
+                            ${establishment.availableSpots === 0 ? 'No Spots Available' : 'Reserve Spot'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterEstablishments() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const locationFilter = document.getElementById('locationFilter').value;
+            const availabilityFilter = document.getElementById('availabilityFilter').value;
+
+            const filtered = establishments.filter(establishment => {
+                const matchesSearch = establishment.name.toLowerCase().includes(searchTerm) ||
+                                    establishment.address.toLowerCase().includes(searchTerm) ||
+                                    establishment.location.toLowerCase().includes(searchTerm);
+                
+                const matchesType = !typeFilter || establishment.type === typeFilter;
+                const matchesLocation = !locationFilter || establishment.location === locationFilter;
+                
+                let matchesAvailability = true;
+                if (availabilityFilter === 'available') {
+                    matchesAvailability = establishment.availableSpots > 10;
+                } else if (availabilityFilter === 'limited') {
+                    matchesAvailability = establishment.availableSpots > 0 && establishment.availableSpots <= 10;
+                }
+
+                return matchesSearch && matchesType && matchesLocation && matchesAvailability;
+            });
+
+            renderEstablishments(filtered);
+        }
+
+        function openReservationModal(establishmentId) {
+            currentEstablishment = establishments.find(e => e.id === establishmentId);
+            document.getElementById('modalEstablishmentName').textContent = currentEstablishment.name;
+            document.getElementById('reservationModal').style.display = 'flex';
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('arrivalDate').min = today;
+            document.getElementById('arrivalDate').value = today;
+        }
+
+        function closeModal() {
+            document.getElementById('reservationModal').style.display = 'none';
+            document.getElementById('reservationForm').reset();
+            currentEstablishment = null;
+        }
+
+        function confirmReservation() {
+            const form = document.getElementById('reservationForm');
+            const formData = new FormData(form);
+            
+            if (!form.checkValidity()) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const reservation = {
+                id: Date.now(),
+                establishmentId: currentEstablishment.id,
+                establishmentName: currentEstablishment.name,
+                customerName: formData.get('customerName') || document.getElementById('customerName').value,
+                customerEmail: formData.get('customerEmail') || document.getElementById('customerEmail').value,
+                customerPhone: formData.get('customerPhone') || document.getElementById('customerPhone').value,
+                vehiclePlate: formData.get('vehiclePlate') || document.getElementById('vehiclePlate').value,
+                arrivalDate: formData.get('arrivalDate') || document.getElementById('arrivalDate').value,
+                arrivalTime: formData.get('arrivalTime') || document.getElementById('arrivalTime').value,
+                duration: parseInt(formData.get('duration') || document.getElementById('duration').value),
+                totalCost: currentEstablishment.pricePerHour * parseInt(document.getElementById('duration').value),
+                reservationDate: new Date().toISOString(),
+                status: 'confirmed'
+            };
+
+            reservations.push(reservation);
+            
+            // Update available spots
+            currentEstablishment.availableSpots = Math.max(0, currentEstablishment.availableSpots - 1);
+            
+            alert(`Reservation confirmed!\n\nDetails:\n- Establishment: ${reservation.establishmentName}\n- Date: ${reservation.arrivalDate}\n- Time: ${reservation.arrivalTime}\n- Duration: ${reservation.duration} hours\n- Total Cost: $${reservation.totalCost}\n\nReservation ID: #${reservation.id}`);
+            
+            closeModal();
+            renderEstablishments();
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', filterEstablishments);
+        document.getElementById('typeFilter').addEventListener('change', filterEstablishments);
+        document.getElementById('locationFilter').addEventListener('change', filterEstablishments);
+        document.getElementById('availabilityFilter').addEventListener('change', filterEstablishments);
+
+        // Close modal when clicking outside
+        document.getElementById('reservationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize the page
+        renderEstablishments();
     </script>
 </body>
 </html>
