@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ParkEasy - Hotel & Venue Parking Reservations</title>
+    <title>Reserve a slot!</title>
     
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS + Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
     
     <style>
-        /* Custom styles to enhance Bootstrap */
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
         
@@ -33,7 +30,7 @@
 
         header{
             z-index: 2;
-            background-color: white;
+            background-color: #3e8ede;
             padding: 10px;
             padding-left: 30px;
             width: 100%;
@@ -48,6 +45,15 @@
 
         header button{
             float: right;
+        }
+
+        .switchback{
+            text-align: center;
+            float:right;
+        }
+
+        .switchback button{
+            width: 300px;
         }
         
         .establishment-card {
@@ -103,7 +109,7 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 750px) {
             .hero-title {
                 font-size: 2rem;
             }
@@ -112,7 +118,7 @@
 </head>
 <body>
     <header>
-        <span class="fs-1">TITLE</span>
+        <span class="fs-1">TigerBytes</span>
         <button type="button" class="btn"><i class="bi bi-person-circle h1"></i></button>
     </header>
     <!-- Hero Section -->
@@ -141,16 +147,6 @@
                 
                 <!-- Filters -->
                 <div class="row g-3">
-                    <div class="col-md-4">
-                        <label for="typeFilter" class="form-label fw-bold">Type</label>
-                        <select id="typeFilter" class="form-select">
-                            <option value="">All Types</option>
-                            <option value="Hotel">Hotels</option>
-                            <option value="Event Venue">Event Venues</option>
-                            <option value="Conference Center">Conference Centers</option>
-                            <option value="Restaurant">Restaurants</option>
-                        </select>
-                    </div>
                     
                     <div class="col-md-4">
                         <label for="availabilityFilter" class="form-label fw-bold">Availability</label>
@@ -161,18 +157,14 @@
                         </select>
                     </div>
 
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="customSwitchWithText">
-                        <label class="form-check-label" for="customSwitchWithText">
-                            <span class="switch-text-off">OFF</span>
-                            <span class="switch-text-on">ON</span>
-                        </label>
+                    <div class="switchback col mt-5">
+                        <button type="button" class="btn btn-primary" style="background: linear-gradient(135deg, #667eea, #764ba2);">General Parkings</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Establishments Grid -->
+        <!-- Establishments -->
         <div id="establishmentsContainer" class="row g-4">
             <!-- Establishments will be populated here -->
         </div>

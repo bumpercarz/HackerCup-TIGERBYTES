@@ -10,16 +10,6 @@ const establishments = [
                 pricePerHour: 8
             },
             {
-                id: 2,
-                name: "Skyline Conference Center",
-                type: "Conference Center",
-                location: "Business District",
-                address: "456 Business Ave, Business District",
-                totalSpots: 300,
-                availableSpots: 87,
-                pricePerHour: 6
-            },
-            {
                 id: 3,
                 name: "Oceanview Resort",
                 type: "Hotel",
@@ -31,16 +21,6 @@ const establishments = [
             },
             {
                 id: 4,
-                name: "Metropolitan Event Hall",
-                type: "Event Venue",
-                location: "Downtown",
-                address: "321 Event Plaza, Downtown",
-                totalSpots: 180,
-                availableSpots: 34,
-                pricePerHour: 10
-            },
-            {
-                id: 5,
                 name: "Airport Suites Hotel",
                 type: "Hotel",
                 location: "Airport Area",
@@ -50,17 +30,7 @@ const establishments = [
                 pricePerHour: 5
             },
             {
-                id: 6,
-                name: "Fine Dining Restaurant",
-                type: "Restaurant",
-                location: "Downtown",
-                address: "888 Gourmet Street, Downtown",
-                totalSpots: 50,
-                availableSpots: 0,
-                pricePerHour: 15
-            },
-            {
-                id: 7,
+                id: 5,
                 name: "Business Park Hotel",
                 type: "Hotel",
                 location: "Business District",
@@ -68,16 +38,6 @@ const establishments = [
                 totalSpots: 100,
                 availableSpots: 23,
                 pricePerHour: 7
-            },
-            {
-                id: 8,
-                name: "Celebration Banquet Hall",
-                type: "Event Venue",
-                location: "Waterfront",
-                address: "777 Celebration Ave, Waterfront",
-                totalSpots: 250,
-                availableSpots: 156,
-                pricePerHour: 9
             }
         ];
 
@@ -126,7 +86,7 @@ const establishments = [
                 }
                 
                 return `
-                    <div class="col-lg-6 col-xl-4">
+                    <div class="row-lg-6 row-xl-4">
                         <div class="card h-100 establishment-card">
                             <div class="card-top-border"></div>
                             <div class="card-body d-flex flex-column">
@@ -179,8 +139,6 @@ const establishments = [
 
         function filterEstablishments() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const typeFilter = document.getElementById('typeFilter').value;
-            const locationFilter = document.getElementById('locationFilter').value;
             const availabilityFilter = document.getElementById('availabilityFilter').value;
 
             const filtered = establishments.filter(establishment => {
@@ -188,8 +146,6 @@ const establishments = [
                                     establishment.address.toLowerCase().includes(searchTerm) ||
                                     establishment.location.toLowerCase().includes(searchTerm);
                 
-                const matchesType = !typeFilter || establishment.type === typeFilter;
-                const matchesLocation = !locationFilter || establishment.location === locationFilter;
                 
                 let matchesAvailability = true;
                 if (availabilityFilter === 'available') {
@@ -198,7 +154,7 @@ const establishments = [
                     matchesAvailability = establishment.availableSpots > 0 && establishment.availableSpots <= 10;
                 }
 
-                return matchesSearch && matchesType && matchesLocation && matchesAvailability;
+                return matchesSearch && matchesAvailability;
             });
 
             renderEstablishments(filtered);
