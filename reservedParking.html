@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TigerBytes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-name">
+  <p>TigerBytes</p>
+</div>
+
+ <div class="control-panel">
+  <div class="search-container">
+    <form id="searchForm">
+      <input type="text" id="searchBar" placeholder="Search establishments...">
+      <button type="submit" class="searchButton">Search</button>
+    </form>
+  </div>
+  
+  <div class="button-group">
+    <button type="button" class="parkButton" id="generalBtn">General Parking</button>
+    <button type="button" class="parkButton" id="reservedBtn">Reserved Parking</button>
+  </div>
+
+  <ul id="itemList"></ul>
+</div>
+
+  <!-- Home tab thumbnail -->
+    <a href="maptab.html" class="map-thumbnail-link">
+        <div id="mapThumbnail" class="map-thumbnail"></div>
+    </a>
+  
+  
+
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content" id="modalContent">
+      <div class="modal-header" id="modalHeader">
+        <div class="drag-handle"></div>
+        <button class="close-btn" id="closeBtn">&times;</button>
+        <div class="establishment-name" id="modalTitle">Establishment Name</div>
+        <div class="establishment-type" id="modalType">Restaurant</div>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Content will be populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <div class="images-section">
+  <div class="image-container">
+    <img src="manila_hotel.jpg" class="tile" alt="Events Center BGC">
+    <div class="image-overlay">
+      <div class="overlay-title">Manila Hotel</div>
+      <div class="overlay-location">25th St., Port Area, Manila</div>
+      <!-- <div class="overlay-info"></div> -->
+      <div class="overlay-buttons">
+        <button class="overlay-btn navigate-btn" onclick="">Navigate</button>
+        <button class="overlay-btn contact-btn" onclick="">Contact</button>
+      </div>
+    </div>
+  </div>
+
+<div class="image-container">
+    <img src="okada.jpg" class="tile" alt="Events Center BGC">
+    <div class="image-overlay">
+      <div class="overlay-title">Okada Manila</div>
+      <div class="overlay-location">New Seaside Dr, Parañaque</div>
+      <!-- <div class="overlay-info"></div> -->
+      <div class="overlay-buttons">
+        <button class="overlay-btn navigate-btn" onclick="">Navigate</button>
+        <button class="overlay-btn contact-btn" onclick="">Contact</button>
+      </div>
+    </div>
+  </div>
+
+<div class="image-container">
+    <img src="diamond.jpg" class="tile" alt="Events Center BGC">
+    <div class="image-overlay">
+      <div class="overlay-title">Diamond Hotel Manila</div>
+      <div class="overlay-location">Quintos Street, Manila</div>
+      <!-- <div class="overlay-info"></div> -->
+      <div class="overlay-buttons">
+        <button class="overlay-btn navigate-btn" onclick="">Navigate</button>
+        <button class="overlay-btn contact-btn" onclick="">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="image-container">
+    <img src="bayleaf.jpeg" class="tile" alt="Events Center BGC">
+    <div class="image-overlay">
+      <div class="overlay-title">The Bayleaf</div>
+      <div class="overlay-location">Muralla St, Intramuros, Manila</div>
+      <!-- <div class="overlay-info"></div> -->
+      <div class="overlay-buttons">
+        <button class="overlay-btn navigate-btn" onclick="">Navigate</button>
+        <button class="overlay-btn contact-btn" onclick="">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="image-container">
+    <img src="grand.jpg" class="tile" alt="Events Center BGC">
+    <div class="image-overlay">
+      <div class="overlay-title">Manila Grand Hotel Opera</div>
+      <div class="overlay-location">925 Doroteo Jose St, Santa Cruz, Manila</div>
+      <!-- <div class="overlay-info"></div> -->
+      <div class="overlay-buttons">
+        <button class="overlay-btn navigate-btn" onclick="">Navigate</button>
+        <button class="overlay-btn contact-btn" onclick="">Contact</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  <script src="thumbnail.js"></script>
+  
+
+</body>
+</html>
