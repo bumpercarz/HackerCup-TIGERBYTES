@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Store one valid account (permanent unless cleared from browser)
     if (!localStorage.getItem("validEmail") || !localStorage.getItem("validPassword")) {
-        localStorage.setItem("validEmail", "sample@gmail.com");
+        localStorage.setItem("validEmail", "john.doe@gmail.com");
         localStorage.setItem("validPassword", "123456"); // plain text for demo
     }
 
