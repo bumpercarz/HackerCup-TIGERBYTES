@@ -47,13 +47,20 @@
             float: right;
         }
 
-        .switchback{
-            text-align: center;
-            float:right;
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 1rem;
         }
 
-        .switchback button{
-            width: 300px;
+        .filter-buttons .btn {
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-buttons .btn:hover {
+            transform: translateY(-2px);
         }
         
         .establishment-card {
@@ -113,6 +120,15 @@
             .hero-title {
                 font-size: 2rem;
             }
+            
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-buttons .btn {
+                width: 200px;
+            }
         }
     </style>
 </head>
@@ -146,8 +162,7 @@
                 </div>
                 
                 <!-- Filters -->
-                <div class="row g-3">
-                    
+                <div class="row g-3 align-items-end">
                     <div class="col-md-4">
                         <label for="availabilityFilter" class="form-label fw-bold">Availability</label>
                         <select id="availabilityFilter" class="form-select">
@@ -157,8 +172,17 @@
                         </select>
                     </div>
 
-                    <div class="switchback col mt-5">
-                        <button type="button" class="btn btn-primary" style="background: linear-gradient(135deg, #667eea, #764ba2);">General Parkings</button>
+                    <div class="col-md-8">
+                        <div class="filter-buttons">
+                            <button type="button" class="btn btn-outline-primary btn-lg" id="generalBtn">
+                                <i class="bi bi-car-front me-2"></i>
+                                General Parking
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-lg" id="reservedBtn">
+                                <i class="bi bi-building me-2"></i>
+                                Reserved Parking
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

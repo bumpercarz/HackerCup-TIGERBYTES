@@ -161,23 +161,103 @@ const establishments = [
     }
   },
   {
-    id: "prc", // unique identifier (string)
-    name: "Professional Regulation Commission", // establishment name
-    type: "Government Building", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
-    lat: 0.0, // latitude (number)
-    lng: 0.0, // longitude (number)
-    image: "", // main image URL
-    address: "JX3Q+W9X, P. Paredes, Nicanor Reyes St, Sampaloc, Manila, 1008 Metro Manila", // full address
-    phone: "23100026", // contact number
-    hours: "Mon-Fri: 8:00 AM - 5:00 PM,
-    description: "The Professional Regulation Commission (PRC) administers, implements, and enforces the regulatory laws and policies of the country with respect to the regulation and licensing of the various professions and occupations under its jurisdiction.", // brief description
-    amenities: [Restroom], // array of strings describing features
-    parkingType: "general", // category like 'general', 'VIP', 'reserved', etc.
-    parking: {
-      available: true, // boolean
-      spaces: 45, // number of spaces
-      type: "Free parking", // description (e.g., "Free parking with validation")
-      image: "" // parking image URL
+    "id": "prc", // unique identifier (string)
+    "name": "Professional Regulation Commission", // establishment name
+    "type": "Government Building", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
+    "lat": 14.604666720206733, // latitude (number)
+    "lng": 120.98808379421557, // longitude (number)
+    "image": "", // main image URL
+    "address": "JX3Q+W9X, P. Paredes, Nicanor Reyes St, Sampaloc, Manila, 1008 Metro Manila", // full address
+    "phone": "23100026", // contact number
+    "hours": "Mon-Fri: 8:00 AM - 5:00 PM",
+    "description": "The Professional Regulation Commission (PRC) administers, implements, and enforces the regulatory laws and policies of the country with respect to the regulation and licensing of the various professions and occupations under its jurisdiction.", // brief description
+    "amenities": ["Restroom"], // array of strings describing features
+    "parkingType": "general", // category like 'general', 'VIP', 'reserved', etc.
+    "parking": {
+      "available": true, // boolean
+      "spaces": 45, // number of spaces
+      "type": "Free parking", // description (e.g., "Free parking with validation")
+      "image": "" // parking image URL
+    }
+  },
+  {
+    "id": "moret", // unique identifier (string)
+    "name": "Moret St. Pay Parking", // establishment name
+    "type": "Parking Lot", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
+    "lat": 14.606773, // latitude (number)
+    "lng": 120.991303, // longitude (number)
+    "image": "", // main image URL
+    "address": "JX4R+PG3 Manila, Metro Manila", // full address
+    "phone": "N/A", // contact number
+    "hours": "Daily 6:00 AM - 9:00 PM",
+    "description": "Small parking lot near University Tower 1 in Moret Street.", // brief description
+    "amenities": [], // array of strings describing features
+    "parkingType": "general", // category like 'general', 'VIP', 'reserved', etc.
+    "parking": {
+      "available": true, // boolean
+      "spaces": 31, // number of spaces
+      "type": "Pay parking", // description (e.g., "Free parking with validation")
+      "image": "" // parking image URL
+    }
+  },
+  {
+    "id": "dogland", // unique identifier (string)
+    "name": "Dog's Land Veterinary Clinic", // establishment name
+    "type": "Veterinary care", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
+    "lat": 14.629304589043068, // latitude (number)
+    "lng": 120.99609053612384, // longitude (number)
+    "image": "", // main image URL
+    "address": "485 Mayon St, La Loma, Quezon City, 1114 Metro Manila", // full address
+    "phone": "0234101884", // contact number
+    "hours": "Mon-Fri 9:00 AM - 4:00 PM",
+    "description": "A small veterinary clinic for pets located in Mayon St, La Loma, QC.", // brief description
+    "amenities": ["Pet Appointments"], // array of strings describing features
+    "parkingType": "general", // category like 'general', 'VIP', 'reserved', etc.
+    "parking": {
+      "available": true, // boolean
+      "spaces": 2, // number of spaces
+      "type": "Free parking", // description (e.g., "Free parking with validation")
+      "image": "" // parking image URL
+    }
+  },
+  {
+    "id": "greencourt", // unique identifier (string)
+    "name": "Green Court Parking", // establishment name
+    "type": "Veterinary care", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
+    "lat": 14.566794569616917, // latitude (number)
+    "lng": 120.99226404436467, // longitude (number)
+    "image": "", // main image URL
+    "address": "HX8R+PW2, Fidel A.Reyes, Malate, Manila, 1004 Metro Manila", // full address
+    "phone": "N/A", // contact number
+    "hours": "Daily 6:00 AM - 9:00 PM",
+    "description": "A small little parking space in Fidel Reyes between Starbucks and 7-Eleven in La Salle.", // brief description
+    "amenities": ["Wheelchair Accessible Entrance"], // array of strings describing features
+    "parkingType": "general", // category like 'general', 'VIP', 'reserved', etc.
+    "parking": {
+      "available": true, // boolean
+      "spaces": 30, // number of spaces
+      "type": "Pay parking", // description (e.g., "Free parking with validation")
+      "image": "" // parking image URL
+    }
+  },
+  {
+    "id": "intramuros", // unique identifier (string)
+    "name": "Intramuros Administration Parking Lot", // establishment name
+    "type": "Parking Lot", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
+    "lat": 14.591311334277902, // latitude (number)
+    "lng": 120.9730436600574, // longitude (number)
+    "image": "", // main image URL
+    "address": "HXRF+G67, Postigo St, Intramuros, Manila, 1002 Metro Manila", // full address
+    "phone": "N/A", // contact number
+    "hours": "Daily 5:30 PM - 10:00 AM",
+    "description": "Parking Near Manila Cathedral.", // brief description
+    "amenities": ["Wheelchair Accessible Parking Lot"], // array of strings describing features
+    "parkingType": "general", // category like 'general', 'VIP', 'reserved', etc.
+    "parking": {
+      "available": true, // boolean
+      "spaces": 50, // number of spaces
+      "type": "Pay parking", // description (e.g., "Free parking with validation")
+      "image": "" // parking image URL
     }
   }
 ];
