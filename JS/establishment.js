@@ -1,122 +1,183 @@
 const establishments = [
-      {
-        id: 'mcdo',
-        name: "McDonald's",
-        type: "Fast Food Restaurant",
-        lat: 14.6760,
-        lng: 121.0437,
-        image: "https://images.unsplash.com/photo-1552566558-b5cb8c2e9c18?w=400&h=200&fit=crop",
-        address: "Ground Floor, SM City North EDSA, Quezon City",
-        phone: "+63 2 123 4567",
-        hours: "24/7",
-        description: "World's leading global foodservice retailer with over 36,000 locations worldwide.",
-        amenities: ["Drive-Thru", "WiFi", "McCafé", "24/7 Service"],
-        parkingType: "general",
-        parking: {
-          available: true,
-          spaces: 50,
-          type: "Free parking",
-          image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop"
-        }
-      },
-      {
-        id: 'jollibee',
-        name: "Jollibee",
-        type: "Fast Food Restaurant",
-        lat: 14.6542,
-        lng: 121.0622,
-        image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=200&fit=crop",
-        address: "456 Commonwealth Avenue, Quezon City",
-        phone: "+63 2 987 6543",
-        hours: "6:00 AM - 12:00 AM",
-        description: "The Philippines' largest fast food chain, famous for its fried chicken and sweet-style spaghetti.",
-        amenities: ["Drive-Thru", "Party Packages", "Delivery", "WiFi"],
-        parkingType: "reserved",
-        parking: {
-          available: true,
-          spaces: 30,
-          type: "Reserved parking - ₱20/hour",
-          image: "https://images.unsplash.com/photo-1560707303-4e980ce876ad?w=400&h=200&fit=crop"
-        }
-      },
-      {
-        id: 'kfc',
-        name: "KFC",
-        type: "Fast Food Restaurant",
-        lat: 14.6890,
-        lng: 121.0340,
-        image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=400&h=200&fit=crop",
-        address: "789 Katipunan Avenue, Quezon City",
-        phone: "+63 2 555 0123",
-        hours: "10:00 AM - 11:00 PM",
-        description: "Kentucky Fried Chicken - famous for finger lickin' good fried chicken with 11 herbs and spices.",
-        amenities: ["Drive-Thru", "Delivery", "Catering", "WiFi"],
-        parkingType: "general",
-        parking: {
-          available: true,
-          spaces: 25,
-          type: "Free parking for customers",
-          image: "https://images.unsplash.com/photo-1559758144-958be2b1a7b8?w=400&h=200&fit=crop"
-        }
-      },
-      {
-        id: 'smdc',
-        name: "SMDC",
-        type: "Real Estate Development",
-        lat: 14.6500,
-        lng: 121.0500,
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=200&fit=crop",
-        address: "Mall of Asia Complex, Pasay City",
-        phone: "+63 2 888 9999",
-        hours: "Mon-Fri: 8:00 AM - 6:00 PM, Sat: 9:00 AM - 5:00 PM",
-        description: "SM Development Corporation - Leading real estate developer in the Philippines.",
-        amenities: ["Showroom", "Model Units", "Consultation", "Financing"],
-        parkingType: "reserved",
-        parking: {
-          available: true,
-          spaces: 100,
-          type: "Validated parking - First 3 hours free",
-          image: "https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=400&h=200&fit=crop"
-        }
-      },
-      {
-        id: 'manila-hotel',
-        name: "Manila Hotel",
-        type: "Luxury Hotel",
-        lat: 14.5995,
-        lng: 120.9842,
-        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=200&fit=crop",
-        address: "One Rizal Park, Manila",
-        phone: "+63 2 527 0011",
-        hours: "24/7",
-        description: "The Manila Hotel is a 5-star luxury hotel located in the heart of Manila, offering world-class hospitality since 1912.",
-        amenities: ["Spa", "Pool", "Fine Dining", "Business Center", "Concierge"],
-        parkingType: "reserved",
-        parking: {
-          available: true,
-          spaces: 200,
-          type: "Valet parking - ₱150/day",
-          image: "https://images.unsplash.com/photo-1549294413-26f195200c16?w=400&h=200&fit=crop"
-        }
-      },
-      {
-        id: 'okada',
-        name: "Okada Manila",
-        type: "Integrated Resort",
-        lat: 14.5378,
-        lng: 120.9772,
-        image: "https://images.unsplash.com/photo-1520637836862-4d197d17c38a?w=400&h=200&fit=crop",
-        address: "New Seaside Drive, Entertainment City, Parañaque",
-        phone: "+63 2 888 0777",
-        hours: "24/7",
-        description: "Okada Manila is a luxury integrated resort featuring world-class gaming, dining, entertainment, and accommodations.",
-        amenities: ["Casino", "Shopping", "Spa", "Multiple Restaurants", "Entertainment Shows"],
-        parkingType: "general",
-        parking: {
-          available: true,
-          spaces: 3000,
-          type: "Free parking with validation",
-          image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop"
-        }
-      }
-    ];
+  {
+    "id": "the-manila-hotel-manila",
+    "name": "The Manila Hotel",
+    "type": "Hotel",
+    "lat": 14.5831972,
+    "lng": 120.9742972,
+    "image": "<see above image URL from turn0image0>",
+    "address": "One Rizal Park, Ermita, Manila, 0913 Metro Manila, Philippines",
+    "phone": "+63-2 8527 0011, +63-2 5301 5500",
+    "hours": "Open 24 hours (front desk/lobby); various outlets have specific hours",
+    "description": "A historic five-star hotel opened in 1912, known as the 'Grand Dame' of the Philippines, offering over 500 rooms, heritage architecture, and world-class amenities.",
+    "amenities": [
+      "Outdoor pool with swim-up bar",
+      "Children’s pool",
+      "Full-service spa",
+      "Health club",
+      "Heritage Museum",
+      "Art Gallery",
+      "Business Center",
+      "Executive Club Lounge",
+      "Gift shop / deli",
+      "Hair salon",
+      "Laundry & concierge services",
+      "24-hour room service",
+      "Wi-Fi"
+    ],
+    "parkingType": "reserved",
+    "parking": {
+      "available": true,
+      "spaces": null,
+      "type": "Free self parking (uncovered)",
+      "image": ""
+    }
+  },
+  
+  {
+    "id": "okada-manila-entertainment-city",
+    "name": "Okada Manila",
+    "type": "Integrated Resort",
+    "lat": 14.5151576,
+    "lng": 120.9814988,
+    "image": "", 
+    "address": "New Seaside Drive, Entertainment City, Parañaque City, 1701, Metro Manila, Philippines",
+    "phone": "+632-8888-0777",
+    "hours": "", 
+    "description": "A grand luxury integrated resort opened in December 2016, featuring nearly 1,000 rooms, a vast casino, The Fountain, Cove Manila indoor beach club, world-class spa and extensive entertainment and dining offerings.",
+    "amenities": [
+      "Casino with 3,000+ slot machines and 500 table games",
+      "The Fountain – massive multicolor dancing water feature",
+      "Cove Manila – indoor beach club & nightclub",
+      "The Retreat Spa",
+      "PLAY Kids’ Club (indoor kids facility)",
+      "Fitness center",
+      "Luxury shopping zone (~8,400 sqm)",
+      "Shuttle service"
+    ],
+    "parkingType": "reserved",
+    "parking": {
+      "available": true,
+      "spaces": null,
+      "type": "Free private parking, valet, parking garage and accessible parking available on-site",
+      "image": ""
+    }
+  },
+  {
+    "id": "the-bayleaf-intramuros",
+    "name": "The Bayleaf Intramuros",
+    "type": "Hotel",
+    "lat": 14.5900,
+    "lng": 120.9740,
+    "image": "<see above image>",
+    "address": "Muralla Corner Victoria Streets, Intramuros, Manila, 1002, Metro Manila, Philippines",
+    "phone": "+63 (2) 5318-5000 | 5328-3170",
+    "hours": "24-hour lobby/front desk; check-in from 14:00, check-out by 12:00",
+    "description": "A stylish boutique hotel established in 2011 inside the historic Intramuros walls, offering 57 modern rooms, rooftop dining with panoramic views, and prime access to Manila’s heritage landmarks.",
+    "amenities": [
+      "Free Wi-Fi throughout",
+      "On-site dining: Sky Deck (rooftop bar), 9 Spoons, Raffaele, Cioccolata Churros Café",
+      "Ballroom (Muralla) & 5 function rooms (Herb-themed names)",
+      "Concierge & business center",
+      "Free on-site parking",
+      "Banquet and event services",
+      "Elevator",
+      "Luggage storage",
+      "Currency exchange",
+      "Valet & car hire services"
+    ],
+    "parkingType": "reserved",
+    "parking": {
+      "available": true,
+      "spaces": null,
+      "type": "Free self-parking (covered) and valet parking available; parking spots may be limited",
+      "image": ""
+    }
+  },
+  {
+    "id": "diamond-hotel-philippines",
+    "name": "Diamond Hotel Philippines",
+    "type": "Hotel",
+    "lat": 14.5726,
+    "lng": 120.9821,
+    "image": "<see above image>",
+    "address": "Roxas Boulevard corner Dr. J. Quintos Street, Manila, Philippines 1000",
+    "phone": "(632) 528-3000; (632) 5305-3000",
+    "hours": "24-hour lobby/front desk; check-in from 14:00 (2 PM), check-out by 12:00 (noon)",
+    "description": "A 5-star deluxe hotel along Manila Bay known for its classic elegance, prime location, ~482–500 rooms with bay views, event venues, dining, fitness, pool, and business amenities.",
+    "amenities": [
+      "Outdoor swimming pool and children’s pool with sun loungers",
+      "Fitness centre / health club",
+      "Sauna",
+      "Tennis court",
+      "Restaurants and bars (e.g., Yurakuen Japanese Restaurant, Corniche)",
+      "Business centre",
+      "Meeting & banquet facilities",
+      "Wi-Fi (in rooms, surcharge; public areas free)",
+      "Limo/town car service",
+      "Electric car charging station",
+      "Laundry, dry-cleaning, concierge, 24-hour reception",
+      "Accessibility features"
+    ],
+    "parkingType": "reserved",
+    "parking": {
+      "available": true,
+      "spaces": null,
+      "type": "Free self-parking (uncovered), valet parking (approx. PHP 150/day), parking garage, accessible parking, electric vehicle charging",
+      "image": ""
+    }
+  },
+  
+  {
+    "id": "solaire-resort-entertainment-city",
+    "name": "Solaire Resort Entertainment City",
+    "type": "Integrated Resort",
+    "lat": 14.523166,
+    "lng": 120.981260,
+    "image": "<see above image>",
+    "address": "1 Aseana Avenue, Entertainment City, Tambo, Parañaque City 1701, Metro Manila, Philippines",
+    "phone": "+632 8888-8888",
+    "hours": "24-hour operations; check-in from 15:00, check-out by 12:00",
+    "description": "A premier luxury integrated resort opened in March 2013, featuring two towers (Bay & Sky), over 790 rooms, expansive gaming, gourmet dining, theatre, spa, fitness, art gallery, retail mall, and world-class entertainment.",
+    "amenities": [
+      "793 rooms across Bay and Sky Towers",
+      "18,500 m² gaming area with 360 table games & 1,620 slot machines",
+      "Column-free Grand Ballroom (1,300 capacity)",
+      "The Theatre at Solaire (1,740-seat lyric theatre)",
+      "The Shoppes – luxury retail brands (e.g., Gucci, Dior, Louis Vuitton)",
+      "14 dining outlets: Finestra, Yakumi, Red Lantern, Fresh, Waterside, Oasis, Kiwa, The Patisserie, Lucky Noodles, Food Court, etc.",
+      "Outdoor pool with cabanas (7 AM–9 PM)",
+      "Spa, sauna, fitness center",
+      "Art gallery",
+      "Multilingual staff, business services, limo/town car service",
+      "Free Wi-Fi in rooms and public areas"
+    ],
+    "parkingType": "reserved",
+    "parking": {
+      "available": true,
+      "spaces": null,
+      "type": "Free self-parking (casino/theatre car park) and valet (PHP 150 + PHP 50/hr thereafter)",
+      "image": ""
+    }
+  },
+  {
+    id: "prc", // unique identifier (string)
+    name: "Professional Regulation Commission", // establishment name
+    type: "Government Building", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
+    lat: 0.0, // latitude (number)
+    lng: 0.0, // longitude (number)
+    image: "", // main image URL
+    address: "JX3Q+W9X, P. Paredes, Nicanor Reyes St, Sampaloc, Manila, 1008 Metro Manila", // full address
+    phone: "23100026", // contact number
+    hours: "Mon-Fri: 8:00 AM - 5:00 PM,
+    description: "The Professional Regulation Commission (PRC) administers, implements, and enforces the regulatory laws and policies of the country with respect to the regulation and licensing of the various professions and occupations under its jurisdiction.", // brief description
+    amenities: [Restroom], // array of strings describing features
+    parkingType: "general", // category like 'general', 'VIP', 'reserved', etc.
+    parking: {
+      available: true, // boolean
+      spaces: 45, // number of spaces
+      type: "Free parking", // description (e.g., "Free parking with validation")
+      image: "" // parking image URL
+    }
+  }
+];
