@@ -4,20 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     const emailInput = document.getElementById('email');
 
-    // Store one valid account (permanent unless cleared from browser)
+
     if (!localStorage.getItem("validEmail") || !localStorage.getItem("validPassword")) {
         localStorage.setItem("validEmail", "john.doe@gmail.com");
-        localStorage.setItem("validPassword", "123456"); // plain text for demo
+        localStorage.setItem("validPassword", "123456"); 
     }
 
-    // Toggle password visibility
+
     togglePassword.addEventListener('click', function() {
         const type = passwordInput.type === 'password' ? 'text' : 'password';
         passwordInput.type = type;
         this.textContent = type === 'password' ? '👁️' : '🙈';
     });
 
-    // Form submission - Validate credentials
+
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Add smooth hover effects for interactive elements
+
     document.querySelectorAll('.form-input, .login-button, .forgot-password, .register-link a')
         .forEach(element => {
             element.addEventListener('mouseenter', function() {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-    // Add focus effects for form inputs
+
     document.querySelectorAll('.form-input').forEach(input => {
         input.addEventListener('focus', function() {
             this.parentElement.style.transform = 'scale(1.02)';
