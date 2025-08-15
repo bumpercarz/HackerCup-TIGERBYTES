@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Establishment Map</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding-bottom: 80px; /* Space for footer */
+    }
+
+    .control-panel {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      margin: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .search-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    #searchForm {
+      display: flex;
+      gap: 10px;
+    }
+
+    #searchBar {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 25px;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    #searchBar:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .button-group .btn {
+      flex: 1;
+      border-radius: 25px;
+      padding: 12px 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .map-thumbnail-link {
+      display: block;
+      margin: 0 20px 20px 20px;
+      text-decoration: none;
+    }
+
+    .map-thumbnail {
+      height: 200px;
+      background: #f8f9fa;
+      border-radius: 15px;
+      border: 2px solid #dee2e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c757d;
+      font-size: 18px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      background-image: linear-gradient(45deg, #f8f9fa 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f8f9fa 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f8f9fa 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+
+    .map-thumbnail:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      border-color: #667eea;
+    }
+
+    .map-thumbnail::before {
+      content: "🗺️ View Interactive Map";
+      font-size: 16px;
+    }
+
+    /* Parking Cards Styles */
+    .parking-section {
+      margin: 0 20px 20px 20px;
+    }
+
+    .section-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .section-title {
+      color: #333;
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-subtitle {
+      color: #666;
+      font-size: 1rem;
+    }
+
+    .parking-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      margin-bottom: 15px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .parking-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-top-border {
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 15px 15px 0 0;
+    }
+
+    .parking-stats {
+      background: rgba(248, 249, 250, 0.8);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: block;
+    }
+
+    .text-available { color: #28a745; }
+    .text-occupied { color: #dc3545; }
+    .text-unknown { color: #6c757d; }
+
+    .price-display {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .gradient-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .gradient-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .coordinates {
+      font-family: monospace;
+      font-size: 0.8rem;
+      background: rgba(233, 236, 239, 0.8);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      display: inline-block;
+    }
+
+    /* Footer Navigation */
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #6c757d;
+      transition: all 0.3s ease;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    .nav-item.active,
+    .nav-item:hover {
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 4px;
+    }
+
+    .nav-label {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .control-panel,
+      .parking-section {
+        margin: 10px;
+      }
+
+      .search-container {
+        gap: 10px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .parking-card {
+        margin-bottom: 10px;
+      }
+
+      .stat-number {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Loading and Empty States */
+    .loading-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: white;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="control-panel">
+    <div class="search-container">
+      <form id="searchForm">
+        <input type="text" id="searchBar" placeholder="Search establishments...">
+        <button type="submit" class="btn btn-primary btn-sm">
+          <i class="bi bi-search"></i> Search
+        </button>
+      </form>
+      <div class="button-group">
+        <button type="button" class="btn btn-primary btn-lg" id="generalBtn">
+          <i class="bi bi-car-front me-2"></i>General Parking
+        </button>
+        <button type="button" class="btn btn-secondary btn-lg" id="reservedBtn">
+          <i class="bi bi-shield-lock me-2"></i>Reserved Parking
+        </button>
+      </div>
+    </div>
+
+    <ul id="itemList"></ul>
+  </div>
+
+  <!-- Home tab thumbnail -->
+  <a href="maptab.html" class="map-thumbnail-link">
+      <div id="mapThumbnail" class="map-thumbnail"></div>
+  </a>
+  
+  <!-- Parking Cards Section -->
+  <div class="parking-section">
+    <div class="section-header">
+      <h2 class="section-title">
+        <i class="bi bi-geo-alt-fill me-2"></i>Available Parking Locations
+      </h2>
+      <p class="section-subtitle">Find and reserve parking spots around Metro Manila</p>
+    </div>
+
+    <!-- Parking Cards Container -->
+    <div id="parkingContainer">
+      <!-- Cards will be populated here -->
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading-state" style="display: none;">
+      <div class="spinner-border text-light mb-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Loading parking locations...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <i class="bi bi-search"></i>
+      <h3>No parking locations found</h3>
+      <p>Try adjusting your search criteria or check back later.</p>
+    </div>
+  </div>
+
+  <!-- Footer Navigation -->
+  <footer class="footer-nav">
+    <nav class="nav-container">
+        <a href="hometab.html" class="nav-item active" data-page="home">
+            <svg class="nav-icon home-icon" viewBox="0 0 24 24">
+                <path d="M3 9.5L12 1l9 8.5v11a1 1 0 01-1 1H4a1 1 0 01-1-1v-11z" stroke="currentColor" stroke-width="2" fill="none"/>
+                <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <span class="nav-label">Home</span>
+        </a>
+        
+        <a href="maptab.html" class="nav-item" data-page="map">
+            <svg class="nav-icon map-icon" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <span class="nav-label">Map</span>
+        </a>
+        
+        <a href="reservationtab.html" class="nav-item" data-page="booking">
+            <svg class="nav-icon booking-icon" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M8 14l2 2 4-4" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <span class="nav-label">Booking</span>
+        </a>
+        
+        <a href="profiletab.html" class="nav-item" data-page="profile">
+            <svg class="nav-icon profile-icon" viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <span class="nav-label">Profile</span>
+        </a>
+    </nav>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  <script src="thumbnail.js"></script>
+  <script>
+    // Your establishments data
+    const establishments = [
+      {
+          id: 1,
+          name: "The Manila Hotel",
+          type: "Hotel",
+          location: "Ermita, Manila",
+          address: "One Rizal Park, Ermita, Manila, 0913 Metro Manila, Philippines",
+          totalSpots: 100,
+          availableSpots: 25,
+          pricePerHour: 80,
+          mapId: "the-manila-hotel-manila",
+          lat: 14.5831972,
+          lng: 120.9742972,
+          phone: "+63-2 8527 0011"
+      },
+      {
+          id: 2,
+          name: "Okada Manila",
+          type: "Integrated Resort",
+          location: "Entertainment City, Parañaque",
+          address: "New Seaside Drive, Entertainment City, Parañaque City, 1701, Metro Manila, Philippines",
+          totalSpots: 800,
+          availableSpots: 245,
+          pricePerHour: 100,
+          mapId: "okada-manila-entertainment-city",
+          lat: 14.5151576,
+          lng: 120.9814988,
+          phone: "+632-8888-0777"
+      },
+      {
+          id: 3,
+          name: "The Bayleaf Intramuros",
+          type: "Hotel",
+          location: "Intramuros, Manila",
+          address: "Muralla Corner Victoria Streets, Intramuros, Manila, 1002, Metro Manila, Philippines",
+          totalSpots: 40,
+          availableSpots: 8,
+          pricePerHour: 60,
+          mapId: "the-bayleaf-intramuros",
+          lat: 14.5900,
+          lng: 120.9740,
+          phone: "+63 (2) 5318-5000"
+      },
+      {
+          id: 4,
+          name: "Diamond Hotel Philippines",
+          type: "Hotel",
+          location: "Manila Bay",
+          address: "Roxas Boulevard corner Dr. J. Quintos Street, Manila, Philippines 1000",
+          totalSpots: 200,
+          availableSpots: 45,
+          pricePerHour: 75,
+          mapId: "diamond-hotel-philippines",
+          lat: 14.5726,
+          lng: 120.9821,
+          phone: "(632) 528-3000"
+      },
+      {
+          id: 5,
+          name: "Solaire Resort Entertainment City",
+          type: "Integrated Resort",
+          location: "Entertainment City, Parañaque",
+          address: "1 Aseana Avenue, Entertainment City, Tambo, Parañaque City 1701, Metro Manila, Philippines",
+          totalSpots: 1000,
+          availableSpots: 156,
+          pricePerHour: 120,
+          mapId: "solaire-resort-entertainment-city",
+          lat: 14.523166,
+          lng: 120.981260,
+          phone: "+632 8888-8888"
+      },
+      {
+          id: 6,
+          name: "Professional Regulation Commission",
+          type: "Government Building",
+          location: "Sampaloc, Manila",
+          address: "JX3Q+W9X, P. Paredes, Nicanor Reyes St, Sampaloc, Manila, 1008 Metro Manila",
+          totalSpots: 45,
+          availableSpots: "NaN",
+          pricePerHour: 0,
+          mapId: "prc",
+          lat: 14.604666720206733,
+          lng: 120.98808379421557,
+          phone: "23100026"
+      },
+      {
+          id: 7,
+          name: "Moret St. Pay Parking",
+          type: "Parking Lot",
+          location: "Manila",
+          address: "JX4R+PG3 Manila, Metro Manila",
+          totalSpots: 31,
+          availableSpots: "NaN",
+          pricePerHour: 25,
+          mapId: "moret",
+          lat: 14.606773,
+          lng: 120.991303,
+          phone: "N/A"
+      },
+      {
+          id: 8,
+          name: "Green Court Parking",
+          type: "Parking Lot",
+          location: "Malate, Manila",
+          address: "HX8R+PW2, Fidel A.Reyes, Malate, Manila, 1004 Metro Manila",
+          totalSpots: 30,
+          availableSpots: "NaN",
+          pricePerHour: 30,
+          mapId: "greencourt",
+          lat: 14.566794569616917,
+          lng: 120.99226404436467,
+          phone: "N/A"
+      },
+      {
+          id: 9,
+          name: "Intramuros Administration Parking Lot",
+          type: "Parking Lot",
+          location: "Intramuros, Manila",
+          address: "HXRF+G67, Postigo St, Intramuros, Manila, 1002 Metro Manila",
+          totalSpots: 50,
+          availableSpots: "NaN",
+          pricePerHour: 20,
+          mapId: "intramuros",
+          lat: 14.591311334277902,
+          lng: 120.9730436600574,
+          phone: "N/A"
+      }
+    ];
+
+    let currentEstablishments = establishments;
+    let isGeneralView = true;
+
+    function renderParkingCards(establishmentsToRender = currentEstablishments) {
+      const container = document.getElementById('parkingContainer');
+      const loadingState = document.getElementById('loadingState');
+      const emptyState = document.getElementById('emptyState');
+      
+      // Hide loading and empty states
+      loadingState.style.display = 'none';
+      emptyState.style.display = 'none';
+      
+      if (establishmentsToRender.length === 0) {
+        emptyState.style.display = 'block';
+        container.innerHTML = '';
+        return;
+      }
+      
+      container.innerHTML = establishmentsToRender.map(establishment => {
+        // Handle NaN or undefined availableSpots
+        const isAvailabilityKnown = establishment.availableSpots !== "NaN" && 
+                                  establishment.availableSpots !== undefined && 
+                                  establishment.availableSpots !== null;
+        
+        const availableSpots = isAvailabilityKnown ? establishment.availableSpots : 0;
+        const occupiedSpots = isAvailabilityKnown ? establishment.totalSpots - availableSpots : 0;
+        
+        // Determine badge and status
+        let badgeClass = 'bg-secondary';
+        let badgeText = 'Unknown';
+        let statusIcon = 'bi-question-circle';
+        
+        if (isAvailabilityKnown) {
+          if (availableSpots === 0) {
+            badgeClass = 'bg-danger';
+            badgeText = 'Full';
+            statusIcon = 'bi-x-circle';
+          } else if (availableSpots <= 10) {
+            badgeClass = 'bg-warning';
+            badgeText = 'Limited';
+            statusIcon = 'bi-exclamation-triangle';
+          } else {
+            badgeClass = 'bg-success';
+            badgeText = 'Available';
+            statusIcon = 'bi-check-circle';
+          }
+        }
+        
+        // Format price
+        const priceDisplay = establishment.pricePerHour === 0 ? 'FREE' : `₱${establishment.pricePerHour}/hour`;
+        
+        // Get type-specific icon
+        let typeIcon = 'bi-building';
+        switch(establishment.type) {
+          case 'Hotel':
+            typeIcon = 'bi-building';
+            break;
+          case 'Integrated Resort':
+            typeIcon = 'bi-star-fill';
+            break;
+          case 'Government Building':
+            typeIcon = 'bi-bank';
+            break;
+          case 'Parking Lot':
+            typeIcon = 'bi-car-front';
+            break;
+        }
+        
+        return `
+          <div class="parking-card">
+            <div class="card-top-border"></div>
+            <div class="card-body p-3">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="flex-grow-1">
+                  <h5 class="card-title mb-2 text-dark">${establishment.name}</h5>
+                  <span class="badge bg-primary me-2">
+                    <i class="${typeIcon} me-1"></i>${establishment.type}
+                  </span>
+                  <span class="badge ${badgeClass}">
+                    <i class="${statusIcon} me-1"></i>${badgeText}
+                  </span>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <div class="text-muted mb-2">
+                  <i class="bi bi-geo-alt me-2"></i>
+                  <strong>${establishment.location}</strong>
+                </div>
+                <div class="small text-muted mb-2">
+                  ${establishment.address}
+                </div>
+                ${establishment.phone !== "N/A" ? `
+                  <div class="small text-muted">
+                    <i class="bi bi-telephone me-2"></i>${establishment.phone}
+                  </div>
+                ` : ''}
+              </div>
+              
+              <div class="parking-stats mb-3">
+                <div class="row text-center">
+                  <div class="col-4">
+                    <span class="stat-number ${isAvailabilityKnown ? 'text-available' : 'text-unknown'}">
+                      ${isAvailabilityKnown ? availableSpots : '?'}
+                    </span>
+                    <small class="text-muted d-block">Available</small>
+                  </div>
+                  <div class="col-4">
+                    <span class="stat-number ${isAvailabilityKnown ? 'text-occupied' : 'text-unknown'}">
+                      ${isAvailabilityKnown ? occupiedSpots : '?'}
+                    </span>
+                    <small class="text-muted d-block">Occupied</small>
+                  </div>
+                  <div class="col-4">
+                    <span class="stat-number text-primary">
+                      ${establishment.totalSpots}
+                    </span>
+                    <small class="text-muted d-block">Total</small>
+                  </div>
+                </div>
+                <hr class="my-2">
+                <div class="text-center price-display">
+                  ${priceDisplay}
+                </div>
+              </div>
+              
+              <div class="mb-3 text-center">
+                <span class="coordinates">
+                  <i class="bi bi-pin-map me-1"></i>
+                  ${establishment.lat.toFixed(6)}, ${establishment.lng.toFixed(6)}
+                </span>
+              </div>
+              
+              <div class="d-grid gap-2">
+                <button class="btn gradient-btn text-white" onclick="viewOnMap('${establishment.mapId}', ${establishment.lat}, ${establishment.lng})">
+                  <i class="bi bi-map me-2"></i>View on Map
+                </button>
+                ${isAvailabilityKnown && availableSpots > 0 ? `
+                  <button class="btn btn-outline-primary" onclick="reserveSpot(${establishment.id})">
+                    <i class="bi bi-calendar-plus me-2"></i>Reserve Spot
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterEstablishments(searchTerm = '') {
+      const filtered = establishments.filter(establishment => {
+        const matchesSearch = !searchTerm || 
+                            establishment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            establishment.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            establishment.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            establishment.type.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesSearch;
+      });
+      
+      currentEstablishments = filtered;
+      renderParkingCards(filtered);
+    }
+
+    function showLoadingState() {
+      document.getElementById('loadingState').style.display = 'block';
+      document.getElementById('parkingContainer').innerHTML = '';
+      document.getElementById('emptyState').style.display = 'none';
+    }
+
+    // Function to integrate with your map
+    function viewOnMap(mapId, lat, lng) {
+      console.log(`View on map: ${mapId} at coordinates ${lat}, ${lng}`);
+      // You can integrate with your existing map functionality here
+      // For now, just redirect to map tab with coordinates
+      window.location.href = `maptab.html?lat=${lat}&lng=${lng}&mapId=${mapId}`;
+    }
+
+    // Function for reservation
+    function reserveSpot(establishmentId) {
+      const establishment = establishments.find(e => e.id === establishmentId);
+      console.log(`Reserve spot at: ${establishment.name}`);
+      // Redirect to reservation tab with establishment info
+      window.location.href = `reservationtab.html?establishmentId=${establishmentId}`;
+    }
+
+    // Event listeners
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const searchTerm = document.getElementById('searchBar').value;
+      filterEstablishments(searchTerm);
+    });
+
+    document.getElementById('searchBar').addEventListener('input', function(e) {
+      const searchTerm = e.target.value;
+      filterEstablishments(searchTerm);
+    });
+
+    document.getElementById('generalBtn').addEventListener('click', function() {
+      showLoadingState();
+      setTimeout(() => {
+        isGeneralView = true;
+        this.classList.remove('btn-secondary');
+        this.classList.add('btn-primary');
+        document.getElementById('reservedBtn').classList.remove('btn-primary');
+        document.getElementById('reservedBtn').classList.add('btn-secondary');
+        renderParkingCards();
+      }, 500);
+    });
+
+    document.getElementById('reservedBtn').addEventListener('click', function() {
+      showLoadingState();
+      setTimeout(() => {
+        isGeneralView = false;
+        this.classList.remove('btn-secondary');
+        this.classList.add('btn-primary');
+        document.getElementById('generalBtn').classList.remove('btn-primary');
+        document.getElementById('generalBtn').classList.add('btn-secondary');
+        // Filter for reserved/premium locations
+        const reservedEstablishments = establishments.filter(est => 
+          est.type === 'Hotel' || est.type === 'Integrated Resort'
+        );
+        renderParkingCards(reservedEstablishments);
+      }, 500);
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      showLoadingState();
+      setTimeout(() => {
+        renderParkingCards();
+      }, 1000);
+    });
+
+    // Include your existing thumbnail.js functionality here if needed
+    // or make sure it's loaded after this script
+  </script>
+</body>
+</html>
