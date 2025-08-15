@@ -20,25 +20,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
-
+    
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
-
+    
         if (!email || !password) {
             alert('Please fill in all fields');
             return;
         }
-
-        const validEmail = localStorage.getItem("validEmail");
-        const validPassword = localStorage.getItem("validPassword");
-
-        if (email === validEmail && password === validPassword) {
+    
+        if (email === "john.doe@gmail.com" && password === "123456") {
             alert("✅ Login successful!");
             window.location.href = 'hometab.html';
         } else {
             alert("❌ Invalid email or password");
         }
     });
+    
 
 
     document.querySelectorAll('.form-input, .login-button, .forgot-password, .register-link a')
