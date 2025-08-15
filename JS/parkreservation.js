@@ -364,37 +364,75 @@ function openReservationModal(establishmentId) {
     reservationModal.show();
 }
 
+let chargesModal = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    reservationModal = new bootstrap.Modal(document.getElementById('reservationModal'));
+    chargesModal = new bootstrap.Modal(document.getElementById('chargesModal'));
+    renderEstablishments();
+    
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('arrivalDate').min = today;
+    document.getElementById('arrivalDate').value = today;
+
+    document.getElementById('generalBtn').addEventListener('click', function() {
+        setParkingFilter('general');
+    });
+    document.getElementById('reservedBtn').addEventListener('click', function() {
+        setParkingFilter('reserved');
+    });
+});
+
+let tempReservationData = {};
+
 function confirmReservation() {
     const form = document.getElementById('reservationForm');
-    
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
     }
 
-    const reservation = {
-        id: Date.now(),
-        establishmentId: currentEstablishment.id,
-        establishmentName: currentEstablishment.name,
+    tempReservationData = {
         customerName: document.getElementById('customerName').value,
         customerEmail: document.getElementById('customerEmail').value,
         customerPhone: document.getElementById('customerPhone').value,
         vehiclePlate: document.getElementById('vehiclePlate').value,
         arrivalDate: document.getElementById('arrivalDate').value,
         arrivalTime: document.getElementById('arrivalTime').value,
-        duration: parseInt(document.getElementById('duration').value),
-        totalCost: currentEstablishment.pricePerHour * parseInt(document.getElementById('duration').value),
+        duration: parseInt(document.getElementById('duration').value)
+    };
+
+    const duration = tempReservationData.duration;
+    const parkingFee = currentEstablishment.pricePerHour * duration;
+    const roomFee = currentEstablishment.pricePerHour * 25;
+    const serviceFee = (parkingFee+roomFee) * 0.10;
+    const total = parkingFee + serviceFee + roomFee;
+
+    document.getElementById('chargesEstablishment').textContent = currentEstablishment.name;
+    document.getElementById('chargesDuration').textContent = duration;
+    document.getElementById('parkingFee').textContent = parkingFee.toFixed(2);
+    document.getElementById('roomFee').textContent = roomFee.toFixed(2);
+    document.getElementById('serviceFee').textContent = serviceFee.toFixed(2);
+    document.getElementById('totalCharges').textContent = total.toFixed(2);
+
+    reservationModal.hide();
+    chargesModal.show();
+}
+
+function finalizeReservation() {
+    const reservation = {
+        id: Date.now(),
+        establishmentId: currentEstablishment.id,
+        establishmentName: currentEstablishment.name,
+        ...tempReservationData,
+        totalCost: parseFloat(document.getElementById('totalCharges').textContent),
         reservationDate: new Date().toISOString(),
         status: 'confirmed'
     };
 
     reservations.push(reservation);
-    
-    // Update available spots
     currentEstablishment.availableSpots = Math.max(0, currentEstablishment.availableSpots - 1);
-    
-    // Show success alert
-    const costDisplay = reservation.totalCost === 0 ? 'Free' : `₱${reservation.totalCost}`;
+
     const alertHtml = `
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <h4 class="alert-heading"><i class="bi bi-check-circle me-2"></i>Reservation Confirmed!</h4>
@@ -402,22 +440,24 @@ function confirmReservation() {
                 <strong>Establishment:</strong> ${reservation.establishmentName}<br>
                 <strong>Date:</strong> ${reservation.arrivalDate} at ${reservation.arrivalTime}<br>
                 <strong>Duration:</strong> ${reservation.duration} hours<br>
-                <strong>Total Cost:</strong> ${costDisplay}<br>
+                <strong>Total Cost:</strong> ₱${reservation.totalCost.toFixed(2)}<br>
                 <strong>Reservation ID:</strong> #${reservation.id}
             </p>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     `;
-    
+
     document.querySelector('.container').insertAdjacentHTML('afterbegin', alertHtml);
-    
-    reservationModal.hide();
-    form.reset();
+
+    chargesModal.hide();
+    document.getElementById('reservationForm').reset();
+    currentEstablishment = null;
+    tempReservationData = {};
     renderEstablishments();
-    
-    // Scroll to top to show the alert
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+
 
 // Event listeners
 document.getElementById('searchInput').addEventListener('input', filterEstablishments);
@@ -426,5 +466,5 @@ document.getElementById('availabilityFilter').addEventListener('change', filterE
 // Clear form when modal is hidden
 document.getElementById('reservationModal').addEventListener('hidden.bs.modal', function() {
     document.getElementById('reservationForm').reset();
-    currentEstablishment = null;
+    //currentEstablishment = null;
 });

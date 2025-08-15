@@ -279,6 +279,72 @@
             </div>
         </div>
     </div>
+    <!-- Room Booking Modal -->
+    <div class="modal fade" id="roomBookingModal" tabindex="-1">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Book a Room</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+            <form id="roomBookingForm">
+                <div class="mb-3">
+                <label class="form-label">Room Type</label>
+                <select class="form-select" required>
+                    <option value="">Select Room</option>
+                    <option>Standard Room</option>
+                    <option>Deluxe Room</option>
+                    <option>Suite</option>
+                </select>
+                </div>
+                <div class="mb-3">
+                <label class="form-label">Check-in Date</label>
+                <input type="date" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                <label class="form-label">Check-out Date</label>
+                <input type="date" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Confirm Room Booking</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+  
+    <!-- Breakdown Charges Modal -->
+    <div class="modal fade" id="chargesModal" tabindex="-1">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+            <h5 class="modal-title">
+                <i class="bi bi-receipt me-2"></i> Breakdown of Charges
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+            <p><strong>Establishment:</strong> <span id="chargesEstablishment"></span></p>
+            <p><strong>Duration:</strong> <span id="chargesDuration"></span> hour(s)</p>
+            <hr>
+            <p>Room Fee: ₱<span id="roomFee"></span></p>
+            <p>Parking Fee: ₱<span id="parkingFee"></span></p>
+            <p>Service Fee (10%): ₱<span id="serviceFee"></span></p>
+            <hr>
+            <h5>Total: ₱<span id="totalCharges"></span></h5>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <i class="bi bi-x-circle me-1"></i>Cancel
+            </button>
+            <button type="button" class="btn btn-success" onclick="finalizeReservation()">
+                <i class="bi bi-check-circle me-1"></i>Confirm Booking
+            </button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
