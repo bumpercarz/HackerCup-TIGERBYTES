@@ -5,7 +5,7 @@ const establishments = [
     "type": "Hotel",
     "lat": 14.5831972,
     "lng": 120.9742972,
-    "image": "<see above image URL from turn0image0>",
+    "image": "Images/manilamain.jpg",
     "address": "One Rizal Park, Ermita, Manila, 0913 Metro Manila, Philippines",
     "phone": "+63-2 8527 0011, +63-2 5301 5500",
     "hours": "Open 24 hours (front desk/lobby); various outlets have specific hours",
@@ -30,7 +30,7 @@ const establishments = [
       "available": true,
       "spaces": null,
       "type": "Free self parking (uncovered)",
-      "image": ""
+      "image": "Images/manilapark.jpeg"
     }
   },
   
@@ -40,7 +40,7 @@ const establishments = [
     "type": "Integrated Resort",
     "lat": 14.5151576,
     "lng": 120.9814988,
-    "image": "", 
+    "image": "Images/bayleafmain.jpg", 
     "address": "New Seaside Drive, Entertainment City, Parañaque City, 1701, Metro Manila, Philippines",
     "phone": "+632-8888-0777",
     "hours": "", 
@@ -60,7 +60,7 @@ const establishments = [
       "available": true,
       "spaces": null,
       "type": "Free private parking, valet, parking garage and accessible parking available on-site",
-      "image": ""
+      "image": "Images/bayleafpark.jpeg"
     }
   },
   {
@@ -100,7 +100,7 @@ const establishments = [
     "type": "Hotel",
     "lat": 14.5726,
     "lng": 120.9821,
-    "image": "<see above image>",
+    "image": "Images/diamondmain.jpg",
     "address": "Roxas Boulevard corner Dr. J. Quintos Street, Manila, Philippines 1000",
     "phone": "(632) 528-3000; (632) 5305-3000",
     "hours": "24-hour lobby/front desk; check-in from 14:00 (2 PM), check-out by 12:00 (noon)",
@@ -124,7 +124,7 @@ const establishments = [
       "available": true,
       "spaces": null,
       "type": "Free self-parking (uncovered), valet parking (approx. PHP 150/day), parking garage, accessible parking, electric vehicle charging",
-      "image": ""
+      "image": "Images/diamondpark.jpeg"
     }
   },
   
@@ -134,7 +134,7 @@ const establishments = [
     "type": "Integrated Resort",
     "lat": 14.523166,
     "lng": 120.981260,
-    "image": "<see above image>",
+    "image": "Images/solairemain.jpg",
     "address": "1 Aseana Avenue, Entertainment City, Tambo, Parañaque City 1701, Metro Manila, Philippines",
     "phone": "+632 8888-8888",
     "hours": "24-hour operations; check-in from 15:00, check-out by 12:00",
@@ -157,7 +157,7 @@ const establishments = [
       "available": true,
       "spaces": null,
       "type": "Free self-parking (casino/theatre car park) and valet (PHP 150 + PHP 50/hr thereafter)",
-      "image": ""
+      "image": "Images/solairepark.jpeg"
     }
   },
   {
@@ -166,7 +166,7 @@ const establishments = [
     "type": "Government Building", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
     "lat": 14.604666720206733, // latitude (number)
     "lng": 120.98808379421557, // longitude (number)
-    "image": "", // main image URL
+    "image": "Images/prcmain.jpg", // main image URL
     "address": "JX3Q+W9X, P. Paredes, Nicanor Reyes St, Sampaloc, Manila, 1008 Metro Manila", // full address
     "phone": "23100026", // contact number
     "hours": "Mon-Fri: 8:00 AM - 5:00 PM",
@@ -177,17 +177,17 @@ const establishments = [
       "available": true, // boolean
       "spaces": 45, // number of spaces
       "type": "Free parking", // description (e.g., "Free parking with validation")
-      "image": "" // parking image URL
+      "image": "Images/prcpark.jpeg" // parking image URL
     }
   },
   {
     "id": "moret", // unique identifier (string)
-    "name": "Moret St. Pay Parking", // establishment name
+    "name": "812 Moret St", // establishment name
     "type": "Parking Lot", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
-    "lat": 14.606773, // latitude (number)
-    "lng": 120.991303, // longitude (number)
-    "image": "", // main image URL
-    "address": "JX4R+PG3 Manila, Metro Manila", // full address
+    "lat": 14.606876927394119, // latitude (number)
+    "lng": 120.9915064353213, // longitude (number)
+    "image": "Images/moretmain.jpeg", // main image URL
+    "address": "812 Moret St, Sampaloc, Manila, 1008 Metro Manila", // full address
     "phone": "N/A", // contact number
     "hours": "Daily 6:00 AM - 9:00 PM",
     "description": "Small parking lot near University Tower 1 in Moret Street.", // brief description
@@ -197,7 +197,7 @@ const establishments = [
       "available": true, // boolean
       "spaces": 31, // number of spaces
       "type": "Pay parking", // description (e.g., "Free parking with validation")
-      "image": "" // parking image URL
+      "image": "Images/moretmain.jpeg" // parking image URL
     }
   },
   {
@@ -206,7 +206,7 @@ const establishments = [
     "type": "Veterinary care", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
     "lat": 14.629304589043068, // latitude (number)
     "lng": 120.99609053612384, // longitude (number)
-    "image": "", // main image URL
+    "image": "Images/dogmain.jpg", // main image URL
     "address": "485 Mayon St, La Loma, Quezon City, 1114 Metro Manila", // full address
     "phone": "0234101884", // contact number
     "hours": "Mon-Fri 9:00 AM - 4:00 PM",
@@ -217,7 +217,7 @@ const establishments = [
       "available": true, // boolean
       "spaces": 2, // number of spaces
       "type": "Free parking", // description (e.g., "Free parking with validation")
-      "image": "" // parking image URL
+      "image": "Images/dogpark.jpeg" // parking image URL
     }
   },
   {
@@ -226,7 +226,7 @@ const establishments = [
     "type": "Veterinary care", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
     "lat": 14.566794569616917, // latitude (number)
     "lng": 120.99226404436467, // longitude (number)
-    "image": "", // main image URL
+    "image": "Images/greencourtmain.jpg", // main image URL
     "address": "HX8R+PW2, Fidel A.Reyes, Malate, Manila, 1004 Metro Manila", // full address
     "phone": "N/A", // contact number
     "hours": "Daily 6:00 AM - 9:00 PM",
@@ -237,7 +237,7 @@ const establishments = [
       "available": true, // boolean
       "spaces": 30, // number of spaces
       "type": "Pay parking", // description (e.g., "Free parking with validation")
-      "image": "" // parking image URL
+      "image": "Images/greencourtpark.jpeg" // parking image URL
     }
   },
   {
@@ -246,7 +246,7 @@ const establishments = [
     "type": "Parking Lot", // category/type (e.g., "Integrated Resort", "Hotel", "Restaurant")
     "lat": 14.591311334277902, // latitude (number)
     "lng": 120.9730436600574, // longitude (number)
-    "image": "", // main image URL
+    "image": "Images/intramurosmain.jpg", // main image URL
     "address": "HXRF+G67, Postigo St, Intramuros, Manila, 1002 Metro Manila", // full address
     "phone": "N/A", // contact number
     "hours": "Daily 5:30 PM - 10:00 AM",
@@ -257,7 +257,7 @@ const establishments = [
       "available": true, // boolean
       "spaces": 50, // number of spaces
       "type": "Pay parking", // description (e.g., "Free parking with validation")
-      "image": "" // parking image URL
+      "image": "Images/intramurospark.jpeg" // parking image URL
     }
   }
 ];
