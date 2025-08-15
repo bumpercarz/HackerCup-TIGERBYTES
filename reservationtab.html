@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ParkEasy - Hotel & Venue Parking Reservations</title>
+    <title>Reserve a slot!</title>
     
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS + Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
     
     <style>
-        /* Custom styles to enhance Bootstrap */
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
         
@@ -27,7 +24,43 @@
             font-size: 3rem;
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-top: 100px;
             margin-bottom: 1rem;
+        }
+
+        header{
+            z-index: 2;
+            background-color: #3e8ede;
+            padding: 10px;
+            padding-left: 30px;
+            width: 100%;
+            height: 5em;
+            vertical-align: middle;
+            position:fixed;
+        }
+
+        header p{
+            font-weight: bold;
+        }
+
+        header button{
+            float: right;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .filter-buttons .btn {
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-buttons .btn:hover {
+            transform: translateY(-2px);
         }
         
         .establishment-card {
@@ -83,24 +116,37 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 750px) {
             .hero-title {
                 font-size: 2rem;
+            }
+            
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-buttons .btn {
+                width: 200px;
             }
         }
     </style>
 </head>
 <body>
+    <header>
+        <span class="fs-1">TigerBytes</span>
+        <button type="button" class="btn"><i class="bi bi-person-circle h1"></i></button>
+    </header>
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1 class="hero-title">🅿️ ParkEasy</h1>
+            <h1 class="hero-title">Reserve a parking spot!</h1>
             <p class="lead">Find and Reserve Parking at Hotels & Venues</p>
         </div>
     </section>
 
     <!-- Main Content -->
-    <div class="container pb-5">
+    <div class="main container pb-5">
         <!-- Search and Filters Card -->
         <div class="card shadow-lg mb-4">
             <div class="card-body">
@@ -116,29 +162,7 @@
                 </div>
                 
                 <!-- Filters -->
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <label for="typeFilter" class="form-label fw-bold">Type</label>
-                        <select id="typeFilter" class="form-select">
-                            <option value="">All Types</option>
-                            <option value="Hotel">Hotels</option>
-                            <option value="Event Venue">Event Venues</option>
-                            <option value="Conference Center">Conference Centers</option>
-                            <option value="Restaurant">Restaurants</option>
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <label for="locationFilter" class="form-label fw-bold">Location</label>
-                        <select id="locationFilter" class="form-select">
-                            <option value="">All Locations</option>
-                            <option value="Downtown">Downtown</option>
-                            <option value="Business District">Business District</option>
-                            <option value="Airport Area">Airport Area</option>
-                            <option value="Waterfront">Waterfront</option>
-                        </select>
-                    </div>
-                    
+                <div class="row g-3 align-items-end">
                     <div class="col-md-4">
                         <label for="availabilityFilter" class="form-label fw-bold">Availability</label>
                         <select id="availabilityFilter" class="form-select">
@@ -147,11 +171,24 @@
                             <option value="limited">Limited Spots</option>
                         </select>
                     </div>
+
+                    <div class="col-md-8">
+                        <div class="filter-buttons">
+                            <button type="button" class="btn btn-outline-primary btn-lg" id="generalBtn">
+                                <i class="bi bi-car-front me-2"></i>
+                                General Parking
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-lg" id="reservedBtn">
+                                <i class="bi bi-building me-2"></i>
+                                Reserved Parking
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Establishments Grid -->
+        <!-- Establishments -->
         <div id="establishmentsContainer" class="row g-4">
             <!-- Establishments will be populated here -->
         </div>
@@ -242,289 +279,77 @@
             </div>
         </div>
     </div>
-
+    <!-- Room Booking Modal -->
+    <div class="modal fade" id="roomBookingModal" tabindex="-1">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Book a Room</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+            <form id="roomBookingForm">
+                <div class="mb-3">
+                <label class="form-label">Room Type</label>
+                <select class="form-select" required>
+                    <option value="">Select Room</option>
+                    <option>Standard Room</option>
+                    <option>Deluxe Room</option>
+                    <option>Suite</option>
+                </select>
+                </div>
+                <div class="mb-3">
+                <label class="form-label">Check-in Date</label>
+                <input type="date" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                <label class="form-label">Check-out Date</label>
+                <input type="date" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Confirm Room Booking</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+  
+    <!-- Breakdown Charges Modal -->
+    <div class="modal fade" id="chargesModal" tabindex="-1">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+            <h5 class="modal-title">
+                <i class="bi bi-receipt me-2"></i> Breakdown of Charges
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+            <p><strong>Establishment:</strong> <span id="chargesEstablishment"></span></p>
+            <p><strong>Duration:</strong> <span id="chargesDuration"></span> hour(s)</p>
+            <hr>
+            <p>Room Fee: ₱<span id="roomFee"></span></p>
+            <p>Parking Fee: ₱<span id="parkingFee"></span></p>
+            <p>Service Fee (10%): ₱<span id="serviceFee"></span></p>
+            <hr>
+            <h5>Total: ₱<span id="totalCharges"></span></h5>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <i class="bi bi-x-circle me-1"></i>Cancel
+            </button>
+            <button type="button" class="btn btn-success" onclick="finalizeReservation()">
+                <i class="bi bi-check-circle me-1"></i>Confirm Booking
+            </button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    
+    
     <!-- Bootstrap JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // Sample data for establishments
-        const establishments = [
-            {
-                id: 1,
-                name: "Grand Plaza Hotel",
-                type: "Hotel",
-                location: "Downtown",
-                address: "123 Main Street, Downtown",
-                totalSpots: 150,
-                availableSpots: 42,
-                pricePerHour: 8
-            },
-            {
-                id: 2,
-                name: "Skyline Conference Center",
-                type: "Conference Center",
-                location: "Business District",
-                address: "456 Business Ave, Business District",
-                totalSpots: 300,
-                availableSpots: 87,
-                pricePerHour: 6
-            },
-            {
-                id: 3,
-                name: "Oceanview Resort",
-                type: "Hotel",
-                location: "Waterfront",
-                address: "789 Ocean Drive, Waterfront",
-                totalSpots: 200,
-                availableSpots: 5,
-                pricePerHour: 12
-            },
-            {
-                id: 4,
-                name: "Metropolitan Event Hall",
-                type: "Event Venue",
-                location: "Downtown",
-                address: "321 Event Plaza, Downtown",
-                totalSpots: 180,
-                availableSpots: 34,
-                pricePerHour: 10
-            },
-            {
-                id: 5,
-                name: "Airport Suites Hotel",
-                type: "Hotel",
-                location: "Airport Area",
-                address: "555 Airport Blvd, Airport Area",
-                totalSpots: 120,
-                availableSpots: 67,
-                pricePerHour: 5
-            },
-            {
-                id: 6,
-                name: "Fine Dining Restaurant",
-                type: "Restaurant",
-                location: "Downtown",
-                address: "888 Gourmet Street, Downtown",
-                totalSpots: 50,
-                availableSpots: 0,
-                pricePerHour: 15
-            },
-            {
-                id: 7,
-                name: "Business Park Hotel",
-                type: "Hotel",
-                location: "Business District",
-                address: "999 Corporate Way, Business District",
-                totalSpots: 100,
-                availableSpots: 23,
-                pricePerHour: 7
-            },
-            {
-                id: 8,
-                name: "Celebration Banquet Hall",
-                type: "Event Venue",
-                location: "Waterfront",
-                address: "777 Celebration Ave, Waterfront",
-                totalSpots: 250,
-                availableSpots: 156,
-                pricePerHour: 9
-            }
-        ];
-
-        let currentEstablishment = null;
-        let reservations = [];
-        let reservationModal;
-
-        // Initialize Bootstrap modal
-        document.addEventListener('DOMContentLoaded', function() {
-            reservationModal = new bootstrap.Modal(document.getElementById('reservationModal'));
-            renderEstablishments();
-            
-            // Set minimum date to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('arrivalDate').min = today;
-            document.getElementById('arrivalDate').value = today;
-        });
-
-        function renderEstablishments(establishmentsToRender = establishments) {
-            const container = document.getElementById('establishmentsContainer');
-            const noResults = document.getElementById('noResults');
-            
-            if (establishmentsToRender.length === 0) {
-                container.style.display = 'none';
-                noResults.style.display = 'block';
-                return;
-            }
-            
-            container.style.display = 'flex';
-            noResults.style.display = 'none';
-            
-            container.innerHTML = establishmentsToRender.map(establishment => {
-                const occupiedSpots = establishment.totalSpots - establishment.availableSpots;
-                const isFullyBooked = establishment.availableSpots === 0;
-                const isLimited = establishment.availableSpots <= 10 && !isFullyBooked;
-                
-                let badgeClass = 'bg-success';
-                let badgeText = 'Available';
-                
-                if (isFullyBooked) {
-                    badgeClass = 'bg-danger';
-                    badgeText = 'Full';
-                } else if (isLimited) {
-                    badgeClass = 'bg-warning';
-                    badgeText = 'Limited';
-                }
-                
-                return `
-                    <div class="col-lg-6 col-xl-4">
-                        <div class="card h-100 establishment-card">
-                            <div class="card-top-border"></div>
-                            <div class="card-body d-flex flex-column">
-                                <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <div>
-                                        <h5 class="card-title mb-1">${establishment.name}</h5>
-                                        <span class="badge bg-primary">${establishment.type}</span>
-                                    </div>
-                                    <span class="badge ${badgeClass}">${badgeText}</span>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <div class="text-muted">
-                                        <i class="bi bi-geo-alt me-2"></i>
-                                        ${establishment.address}
-                                    </div>
-                                </div>
-                                
-                                <div class="parking-stats mb-3">
-                                    <div class="row text-center">
-                                        <div class="col-6">
-                                            <span class="stat-number text-available">${establishment.availableSpots}</span>
-                                            <small class="text-muted d-block">Available</small>
-                                        </div>
-                                        <div class="col-6">
-                                            <span class="stat-number text-occupied">${occupiedSpots}</span>
-                                            <small class="text-muted d-block">Occupied</small>
-                                        </div>
-                                    </div>
-                                    <hr class="my-2">
-                                    <div class="text-center price-display">
-                                        $${establishment.pricePerHour}/hour
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-auto">
-                                    <button class="btn gradient-btn text-white w-100 ${isFullyBooked ? 'disabled' : ''}" 
-                                            ${isFullyBooked ? 'disabled' : ''}
-                                            onclick="openReservationModal(${establishment.id})">
-                                        <i class="bi bi-calendar-plus me-2"></i>
-                                        ${isFullyBooked ? 'No Spots Available' : 'Reserve Spot'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function filterEstablishments() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const typeFilter = document.getElementById('typeFilter').value;
-            const locationFilter = document.getElementById('locationFilter').value;
-            const availabilityFilter = document.getElementById('availabilityFilter').value;
-
-            const filtered = establishments.filter(establishment => {
-                const matchesSearch = establishment.name.toLowerCase().includes(searchTerm) ||
-                                    establishment.address.toLowerCase().includes(searchTerm) ||
-                                    establishment.location.toLowerCase().includes(searchTerm);
-                
-                const matchesType = !typeFilter || establishment.type === typeFilter;
-                const matchesLocation = !locationFilter || establishment.location === locationFilter;
-                
-                let matchesAvailability = true;
-                if (availabilityFilter === 'available') {
-                    matchesAvailability = establishment.availableSpots > 10;
-                } else if (availabilityFilter === 'limited') {
-                    matchesAvailability = establishment.availableSpots > 0 && establishment.availableSpots <= 10;
-                }
-
-                return matchesSearch && matchesType && matchesLocation && matchesAvailability;
-            });
-
-            renderEstablishments(filtered);
-        }
-
-        function openReservationModal(establishmentId) {
-            currentEstablishment = establishments.find(e => e.id === establishmentId);
-            document.getElementById('modalEstablishmentName').textContent = currentEstablishment.name;
-            reservationModal.show();
-        }
-
-        function confirmReservation() {
-            const form = document.getElementById('reservationForm');
-            
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
-
-            const reservation = {
-                id: Date.now(),
-                establishmentId: currentEstablishment.id,
-                establishmentName: currentEstablishment.name,
-                customerName: document.getElementById('customerName').value,
-                customerEmail: document.getElementById('customerEmail').value,
-                customerPhone: document.getElementById('customerPhone').value,
-                vehiclePlate: document.getElementById('vehiclePlate').value,
-                arrivalDate: document.getElementById('arrivalDate').value,
-                arrivalTime: document.getElementById('arrivalTime').value,
-                duration: parseInt(document.getElementById('duration').value),
-                totalCost: currentEstablishment.pricePerHour * parseInt(document.getElementById('duration').value),
-                reservationDate: new Date().toISOString(),
-                status: 'confirmed'
-            };
-
-            reservations.push(reservation);
-            
-            // Update available spots
-            currentEstablishment.availableSpots = Math.max(0, currentEstablishment.availableSpots - 1);
-            
-            // Show success alert
-            const alertHtml = `
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <h4 class="alert-heading"><i class="bi bi-check-circle me-2"></i>Reservation Confirmed!</h4>
-                    <p class="mb-0">
-                        <strong>Establishment:</strong> ${reservation.establishmentName}<br>
-                        <strong>Date:</strong> ${reservation.arrivalDate} at ${reservation.arrivalTime}<br>
-                        <strong>Duration:</strong> ${reservation.duration} hours<br>
-                        <strong>Total Cost:</strong> $${reservation.totalCost}<br>
-                        <strong>Reservation ID:</strong> #${reservation.id}
-                    </p>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            `;
-            
-            document.querySelector('.container').insertAdjacentHTML('afterbegin', alertHtml);
-            
-            reservationModal.hide();
-            form.reset();
-            renderEstablishments();
-            
-            // Scroll to top to show the alert
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Event listeners
-        document.getElementById('searchInput').addEventListener('input', filterEstablishments);
-        document.getElementById('typeFilter').addEventListener('change', filterEstablishments);
-        document.getElementById('locationFilter').addEventListener('change', filterEstablishments);
-        document.getElementById('availabilityFilter').addEventListener('change', filterEstablishments);
-
-        // Clear form when modal is hidden
-        document.getElementById('reservationModal').addEventListener('hidden.bs.modal', function() {
-            document.getElementById('reservationForm').reset();
-            currentEstablishment = null;
-        });
+    <script src="JS/parkreservation.js">
     </script>
 </body>
 </html>

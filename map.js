@@ -258,3 +258,66 @@ const map = L.map('map').setView([14.6760, 121.0437], 15);
         closeModal();
       }
     });
+// Add this code to your mapstab.html or map.js file
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if there's a selected establishment from the parking page
+  const selectedEstablishment = localStorage.getItem('selectedEstablishment');
+  const urlParams = new URLSearchParams(window.location.search);
+  const establishmentId = urlParams.get('establishment');
+  
+  if (selectedEstablishment) {
+      const establishment = JSON.parse(selectedEstablishment);
+      
+      // Focus the map on the selected establishment
+      focusOnEstablishment(establishment.mapId);
+      
+      // Clear the stored data
+      localStorage.removeItem('selectedEstablishment');
+      
+      // Optional: Show a notification
+      showEstablishmentNotification(establishment.name);
+  } else if (establishmentId) {
+      // Alternative method using URL parameter
+      focusOnEstablishment(establishmentId);
+  }
+});
+
+// Function to focus on a specific establishment on the map
+function focusOnEstablishment(mapId) {
+  // This assumes you have your establishments data available in map.js
+  // Find the establishment in your map data
+  const establishment = establishments.find(e => e.id === mapId);
+  if (establishment && typeof map !== 'undefined') {
+      // Center the map on the establishment
+      map.setView([establishment.lat, establishment.lng], 16);
+      
+      // If you have markers, you might want to open the popup
+      // This depends on your specific map implementation
+      // Example: if you have a markers array
+      // const marker = markers.find(m => m.options.id === mapId);
+      // if (marker) marker.openPopup();
+  }
+}
+
+// Optional: Show a notification when arriving from parking page
+function showEstablishmentNotification(establishmentName) {
+  // Create a temporary notification
+  const notification = document.createElement('div');
+  notification.className = 'alert alert-info alert-dismissible fade show position-fixed';
+  notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; max-width: 300px;';
+  notification.innerHTML = `
+      <i class="bi bi-map me-2"></i>
+      <strong>Showing:</strong> ${establishmentName}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+      if (notification.parentNode) {
+          notification.parentNode.removeChild(notification);
+      }
+  }, 5000);
+};
+    
