@@ -77,7 +77,7 @@ const establishments = [
         location: "Sampaloc, Manila",
         address: "JX3Q+W9X, P. Paredes, Nicanor Reyes St, Sampaloc, Manila, 1008 Metro Manila",
         totalSpots: 45,
-        availableSpots: 12,
+        availableSpots: "NaN",
         pricePerHour: 0, // Free government parking
         mapId: "prc",
         lat: 14.604666720206733,
@@ -91,7 +91,7 @@ const establishments = [
         location: "Manila",
         address: "JX4R+PG3 Manila, Metro Manila",
         totalSpots: 31,
-        availableSpots: 8,
+        availableSpots: "NaN",
         pricePerHour: 25, // Standard street parking
         mapId: "moret",
         lat: 14.606773,
@@ -105,7 +105,7 @@ const establishments = [
         location: "Malate, Manila",
         address: "HX8R+PW2, Fidel A.Reyes, Malate, Manila, 1004 Metro Manila",
         totalSpots: 30,
-        availableSpots: 5,
+        availableSpots: "NaN",
         pricePerHour: 30, // Commercial area parking
         mapId: "greencourt",
         lat: 14.566794569616917,
@@ -119,7 +119,7 @@ const establishments = [
         location: "Intramuros, Manila",
         address: "HXRF+G67, Postigo St, Intramuros, Manila, 1002 Metro Manila",
         totalSpots: 50,
-        availableSpots: 18,
+        availableSpots: "NaN",
         pricePerHour: 20, // Tourist area parking
         mapId: "intramuros",
         lat: 14.591311334277902,
@@ -180,27 +180,62 @@ function contactEstablishment(establishmentId) {
     }
 }
 
+// Filter buttons logic
+let currentFilter = 'all';
+
+function applyFilter(filterType) {
+    currentFilter = filterType;
+    let filteredList = establishments;
+
+    if (filterType === 'general') {
+        filteredList = establishments.filter(e =>
+            e.type === 'Parking Lot' || e.type === 'Government Building'
+        );
+    } else if (filterType === 'reserved') {
+        filteredList = establishments.filter(e =>
+            e.type !== 'Parking Lot' && e.type !== 'Government Building'
+        );
+    }
+
+    renderEstablishments(filteredList);
+}
+
+// Attach to buttons
+document.getElementById('generalBtn').addEventListener('click', () => applyFilter('general'));
+document.getElementById('reservedBtn').addEventListener('click', () => applyFilter('reserved'));
+
+// Render function (with your reserve button logic)
 function renderEstablishments(establishmentsToRender = establishments) {
     const container = document.getElementById('establishmentsContainer');
     const noResults = document.getElementById('noResults');
-    
-    if (establishmentsToRender.length === 0) {
+
+    if (!establishmentsToRender || establishmentsToRender.length === 0) {
         container.style.display = 'none';
         noResults.style.display = 'block';
+        container.innerHTML = '';
         return;
     }
-    
+
     container.style.display = 'flex';
     noResults.style.display = 'none';
-    
+
     container.innerHTML = establishmentsToRender.map(establishment => {
-        const occupiedSpots = establishment.totalSpots - establishment.availableSpots;
-        const isFullyBooked = establishment.availableSpots === 0;
-        const isLimited = establishment.availableSpots <= 10 && !isFullyBooked;
-        
+        const availableNum = Number(establishment.availableSpots);
+        const hasKnownAvailability = !isNaN(availableNum);
+        const displayAvailable = hasKnownAvailability ? availableNum : 'N/A';
+        const occupiedSpots = hasKnownAvailability ? (establishment.totalSpots - availableNum) : 'N/A';
+
+        const isFullyBooked = hasKnownAvailability ? (availableNum === 0) : false;
+        const isLimited = hasKnownAvailability ? (availableNum <= 10 && availableNum > 0) : false;
+
+        const isGeneralParking = establishment.type === 'Parking Lot' || establishment.type === 'Government Building';
+        const reserveDisabled = isFullyBooked || isGeneralParking;
+        const reserveButtonText = isFullyBooked
+            ? 'No Spots Available'
+            : (isGeneralParking ? 'Reservation Not Available' : 'Reserve Spot');
+
         let badgeClass = 'bg-success';
         let badgeText = 'Available';
-        
         if (isFullyBooked) {
             badgeClass = 'bg-danger';
             badgeText = 'Full';
@@ -208,13 +243,10 @@ function renderEstablishments(establishmentsToRender = establishments) {
             badgeClass = 'bg-warning';
             badgeText = 'Limited';
         }
-        
-        // Format price display
+
         const priceDisplay = establishment.pricePerHour === 0 ? 'Free' : `₱${establishment.pricePerHour}/hour`;
-        
-        // Check if contact is available
         const hasContact = establishment.phone && establishment.phone !== "N/A";
-        
+
         return `
             <div class="col-lg-6 col-xl-4">
                 <div class="card h-100 establishment-card">
@@ -244,7 +276,7 @@ function renderEstablishments(establishmentsToRender = establishments) {
                         <div class="parking-stats mb-3">
                             <div class="row text-center">
                                 <div class="col-6">
-                                    <span class="stat-number text-available">${establishment.availableSpots}</span>
+                                    <span class="stat-number text-available">${displayAvailable}</span>
                                     <small class="text-muted d-block">Available</small>
                                 </div>
                                 <div class="col-6">
@@ -282,11 +314,12 @@ function renderEstablishments(establishmentsToRender = establishments) {
                                     </button>
                                 `}
                             </div>
-                            <button class="btn gradient-btn text-white w-100 ${isFullyBooked ? 'disabled' : ''}" 
-                                    ${isFullyBooked ? 'disabled' : ''}
-                                    onclick="openReservationModal(${establishment.id})">
+
+                            <button class="btn gradient-btn text-white w-100 ${reserveDisabled ? 'disabled' : ''}"
+                                    ${reserveDisabled ? 'disabled' : ''}
+                                    ${reserveDisabled ? '' : `onclick="openReservationModal(${establishment.id})"`}>
                                 <i class="bi bi-calendar-plus me-2"></i>
-                                ${isFullyBooked ? 'No Spots Available' : 'Reserve Spot'}
+                                ${reserveButtonText}
                             </button>
                         </div>
                     </div>
@@ -295,6 +328,8 @@ function renderEstablishments(establishmentsToRender = establishments) {
         `;
     }).join('');
 }
+
+
 
 // Global filter state
 let currentParkingFilter = 'all'; // 'all', 'general', 'reserved'
