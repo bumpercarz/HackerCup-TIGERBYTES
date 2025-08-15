@@ -40,7 +40,7 @@ const establishments = [
     "type": "Integrated Resort",
     "lat": 14.5151576,
     "lng": 120.9814988,
-    "image": "Images/bayleafmain.jpg", 
+    "image": "Images/okadamain.jpg", 
     "address": "New Seaside Drive, Entertainment City, Parañaque City, 1701, Metro Manila, Philippines",
     "phone": "+632-8888-0777",
     "hours": "", 
@@ -60,7 +60,7 @@ const establishments = [
       "available": true,
       "spaces": null,
       "type": "Free private parking, valet, parking garage and accessible parking available on-site",
-      "image": "Images/bayleafpark.jpeg"
+      "image": "Images/okadapark.jpeg"
     }
   },
   {
@@ -69,7 +69,7 @@ const establishments = [
     "type": "Hotel",
     "lat": 14.5900,
     "lng": 120.9740,
-    "image": "<see above image>",
+    "image": "Images/bayleafmain.jpg",
     "address": "Muralla Corner Victoria Streets, Intramuros, Manila, 1002, Metro Manila, Philippines",
     "phone": "+63 (2) 5318-5000 | 5328-3170",
     "hours": "24-hour lobby/front desk; check-in from 14:00, check-out by 12:00",
@@ -91,7 +91,7 @@ const establishments = [
       "available": true,
       "spaces": null,
       "type": "Free self-parking (covered) and valet parking available; parking spots may be limited",
-      "image": ""
+      "image": "Images/bayleafpark.jpeg"
     }
   },
   {
