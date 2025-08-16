@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TigerBytes</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          #4a90e2 0%,
+          #357abd 25%,
+          #2c5aa0 50%,
+          #4a90e2 75%,
+          #6bb6ff 100%
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease infinite;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 50%
+          );
+        animation: ripple 6s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes ripple {
+        0%,
+        100% {
+          transform: scale(1) rotate(0deg);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.1) rotate(180deg);
+          opacity: 0.8;
+        }
+      }
+
+      .main-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .logo-section {
+        margin-bottom: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo-container {
+        position: relative;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .map-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .map-icon {
+        width: 120px;
+        height: 80px;
+        background: linear-gradient(145deg, #fff8dc 0%, #f5deb3 100%);
+        border-radius: 15px;
+        position: relative;
+        transform: perspective(150px) rotateX(25deg);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        border: 3px solid #e6f3ff;
+      }
+
+      .map-icon::before {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.3) 1px,
+            transparent 1px
+          ),
+          linear-gradient(rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+        background-size: 15px 15px;
+        border-radius: 8px;
+      }
+
+      .map-icon::after {
+        content: "";
+        position: absolute;
+        top: 35px;
+        left: 50px;
+        width: 20px;
+        height: 20px;
+        background: #90ee90;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .location-pin {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 40px;
+      }
+
+      .pin-head {
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(145deg, #ff6b4a 0%, #e55a3d 100%);
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        border: 2px solid white;
+        position: relative;
+      }
+
+      .pin-head::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        width: 12px;
+        height: 12px;
+        background: white;
+        border-radius: 50%;
+      }
+
+      .brand-title {
+        color: white;
+        font-size: 3rem;
+        font-weight: 600;
+        letter-spacing: -1px;
+        margin-bottom: 0;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(135deg, #ffffff 0%, #cce7ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+      }
+
+      .brand-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1rem;
+        font-weight: 300;
+        margin-top: 8px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .button-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .main-button {
+        width: 100%;
+        padding: 18px 20px;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        font-family: "Poppins", sans-serif;
+        letter-spacing: 0.5px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .main-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .main-button:hover::before {
+        left: 100%;
+      }
+
+      .login-button {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        color: #4a90e2;
+        box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+      }
+
+      .login-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(255, 255, 255, 0.4);
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      }
+
+      .signup-button {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+      }
+
+      .signup-button:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      }
+
+      .main-button:active {
+        transform: translateY(-1px);
+      }
+
+      @media (max-width: 480px) {
+        .brand-title {
+          font-size: 2.5rem;
+        }
+
+        .logo-circle {
+          width: 120px;
+          height: 120px;
+        }
+
+        .logo-inner {
+          width: 100px;
+          height: 100px;
+        }
+
+        .tiger-icon {
+          font-size: 3rem;
+        }
+
+        .logo-section {
+          margin-bottom: 60px;
+        }
+
+        .button-section {
+          max-width: 250px;
+        }
+
+        .main-button {
+          padding: 16px 18px;
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-height: 600px) {
+        .logo-section {
+          margin-bottom: 40px;
+        }
+
+        .brand-title {
+          font-size: 2.2rem;
+        }
+
+        .logo-circle {
+          width: 100px;
+          height: 100px;
+        }
+
+        .logo-inner {
+          width: 85px;
+          height: 85px;
+        }
+
+        .tiger-icon {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="logo-section">
+        <div class="logo-container">
+          <div class="map-container">
+            <div class="map-icon"></div>
+            <div class="location-pin">
+              <div class="pin-head"></div>
+            </div>
+          </div>
+        </div>
+        <h1 class="brand-title">TigerBytes</h1>
+        <p class="brand-subtitle">Digital Excellence</p>
+      </div>
+
+      <div class="button-section">
+        <a href="login.html" class="main-button login-button">LOGIN</a>
+        <a href="signup.html" class="main-button signup-button">SIGN UP</a>
+      </div>
+    </div>
+  </body>
+</html>

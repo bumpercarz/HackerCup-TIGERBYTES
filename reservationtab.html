@@ -1,355 +1,877 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reserve a slot!</title>
-    
+
     <!-- Bootstrap CSS + Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
-        body {
-            min-height: 100vh;
-        }
-        
-        .hero-section {
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      body {
+        background: linear-gradient(
+          135deg,
+          #4a90e2 0%,
+          #357abd 25%,
+          #2c5aa0 50%,
+          #4a90e2 75%,
+          #6bb6ff 100%
+        );
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+        padding-bottom: 100px;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      header {
+        background: rgba(248, 249, 250, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 15px 20px;
+        text-align: center;
+        border-radius: 0 0 25px 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        margin: 15px 15px 0;
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        color: #4a90e2;
+        font-size: 1.8rem;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        text-decoration: none;
+      }
+
+      .hero-section {
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-top: 80px;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-subtitle {
+        font-size: 1.1rem;
+        font-weight: 400;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+      }
+
+      /* Main Content */
+      .main {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Search Card */
+      .search-card {
+        background: rgba(248, 249, 250, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .search-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .search-card .card-body {
+        padding: 25px;
+      }
+
+      .input-group-lg .input-group-text {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        border: none;
+      }
+
+      .input-group-lg .form-control {
+        border-left: none;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-label {
+        font-weight: 500;
+        color: #4a90e2;
+        margin-bottom: 8px;
+      }
+
+      .form-select {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      /* Filter Buttons */
+      .filter-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      .filter-buttons .btn {
+        min-width: 180px;
+        border-radius: 12px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        transition: all 0.3s ease;
+        border: 2px solid #4a90e2;
+        color: #4a90e2;
+        background: transparent;
+      }
+
+      .filter-buttons .btn:hover,
+      .filter-buttons .btn.active {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        border-color: transparent;
+      }
+
+      /* Establishment Cards */
+      .establishment-card {
+        transition: all 0.3s ease;
+        border: none;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        background: rgba(248, 249, 250, 0.95);
+        backdrop-filter: blur(10px);
+        margin-bottom: 20px;
+      }
+
+      .establishment-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .card-top-border {
+        height: 5px;
+        background: linear-gradient(90deg, #4a90e2, #357abd);
+      }
+
+      .card-body {
+        padding: 20px;
+      }
+
+      .card-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .card-text {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+      }
+
+      .parking-stats {
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .stat-number {
+        font-size: 1.8rem;
+        font-weight: 600;
+        display: block;
+      }
+
+      .text-available {
+        color: #28a745;
+      }
+
+      .text-occupied {
+        color: #dc3545;
+      }
+
+      .price-display {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #4a90e2;
+        margin-bottom: 15px;
+      }
+
+      .btn-reserve {
+        background-color: #4a90e2; /* Primary blue color from your gradient */
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        transition: all 0.3s ease;
+        width: 100%;
+        color: white;
+      }
+
+      .btn-reserve:hover {
+        background-color: #357abd; /* Darker blue from your gradient */
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+      }
+
+      /* Modal Styles */
+      .modal-header {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        border-bottom: none;
+        border-radius: 15px 15px 0 0;
+      }
+
+      .modal-content {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-body {
+        padding: 25px;
+      }
+
+      .alert-info {
+        background: rgba(74, 144, 226, 0.1);
+        border: 1px solid rgba(74, 144, 226, 0.2);
+        color: #4a90e2;
+        border-radius: 12px;
+      }
+
+      .form-control {
+        border-radius: 10px;
+        padding: 10px 15px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-control:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 0.25rem rgba(74, 144, 226, 0.25);
+      }
+
+      /* Footer Navigation */
+      .footer-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px 0;
+        z-index: 1000;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #6c757d;
+        transition: all 0.3s ease;
+        padding: 5px;
+        border-radius: 10px;
+      }
+
+      .nav-item.active,
+      .nav-item:hover {
+        color: #4a90e2;
+        background: rgba(74, 144, 226, 0.1);
+      }
+
+      .nav-icon {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 4px;
+      }
+
+      .nav-label {
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
         .hero-title {
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-top: 100px;
-            margin-bottom: 1rem;
+          font-size: 2rem;
+          margin-top: 60px;
         }
 
-        header{
-            z-index: 2;
-            background-color: #3e8ede;
-            padding: 10px;
-            padding-left: 30px;
-            width: 100%;
-            height: 5em;
-            vertical-align: middle;
-            position:fixed;
-        }
-
-        header p{
-            font-weight: bold;
-        }
-
-        header button{
-            float: right;
+        .hero-subtitle {
+          font-size: 1rem;
         }
 
         .filter-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 1rem;
+          flex-direction: column;
+          gap: 10px;
         }
 
         .filter-buttons .btn {
-            min-width: 150px;
-            transition: all 0.3s ease;
+          width: 100%;
         }
 
-        .filter-buttons .btn:hover {
-            transform: translateY(-2px);
+        .search-card .card-body {
+          padding: 20px;
         }
-        
+      }
+
+      @media (max-width: 576px) {
+        header {
+          margin: 10px 10px 0;
+          padding: 12px 15px;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+        }
+
+        .hero-title {
+          font-size: 1.8rem;
+          margin-top: 50px;
+        }
+
+        .search-card .card-body {
+          padding: 15px;
+        }
+
         .establishment-card {
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          margin-bottom: 15px;
         }
-        
-        .establishment-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .card-top-border {
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-        
-        .parking-stats {
-            background: #f8f9fa;
-            border-radius: 0.5rem;
-            padding: 1rem;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            display: block;
-        }
-        
-        .text-available {
-            color: #28a745;
-        }
-        
-        .text-occupied {
-            color: #dc3545;
-        }
-        
-        .price-display {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        .gradient-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border: none;
-            transition: all 0.3s ease;
-        }
-        
-        .gradient-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        @media (max-width: 750px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .filter-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .filter-buttons .btn {
-                width: 200px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <span class="fs-1">TigerBytes</span>
-        <button type="button" class="btn"><i class="bi bi-person-circle h1"></i></button>
+      <a href="#" class="logo">TigerBytes</a>
     </header>
+
     <!-- Hero Section -->
     <section class="hero-section">
-        <div class="container">
-            <h1 class="hero-title">Reserve a parking spot!</h1>
-            <p class="lead">Find and Reserve Parking at Hotels & Venues</p>
-        </div>
+      <div class="container">
+        <h1 class="hero-title">Reserve a parking spot!</h1>
+        <p class="hero-subtitle">Find and Reserve Parking at Hotels & Venues</p>
+      </div>
     </section>
 
     <!-- Main Content -->
     <div class="main container pb-5">
-        <!-- Search and Filters Card -->
-        <div class="card shadow-lg mb-4">
-            <div class="card-body">
-                <!-- Search Box -->
-                <div class="mb-4">
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text bg-light">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input type="text" id="searchInput" class="form-control" 
-                               placeholder="Search hotels, venues, or locations...">
-                    </div>
-                </div>
-                
-                <!-- Filters -->
-                <div class="row g-3 align-items-end">
-                    <div class="col-md-4">
-                        <label for="availabilityFilter" class="form-label fw-bold">Availability</label>
-                        <select id="availabilityFilter" class="form-select">
-                            <option value="">All</option>
-                            <option value="available">Available Now</option>
-                            <option value="limited">Limited Spots</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="filter-buttons">
-                            <button type="button" class="btn btn-outline-primary btn-lg" id="generalBtn">
-                                <i class="bi bi-car-front me-2"></i>
-                                General Parking
-                            </button>
-                            <button type="button" class="btn btn-outline-primary btn-lg" id="reservedBtn">
-                                <i class="bi bi-building me-2"></i>
-                                Reserved Parking
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Establishments -->
-        <div id="establishmentsContainer" class="row g-4">
-            <!-- Establishments will be populated here -->
-        </div>
-
-        <!-- No Results -->
-        <div id="noResults" class="text-center text-white mt-5" style="display: none;">
-            <div class="display-6 mb-3">
+      <!-- Search and Filters Card -->
+      <div class="search-card shadow-lg mb-4">
+        <div class="card-body">
+          <!-- Search Box -->
+          <div class="mb-4">
+            <div class="input-group input-group-lg">
+              <span class="input-group-text">
                 <i class="bi bi-search"></i>
+              </span>
+              <input
+                type="text"
+                id="searchInput"
+                class="form-control"
+                placeholder="Search hotels, venues, or locations..."
+              />
             </div>
-            <h3>No establishments found</h3>
-            <p class="lead">Try adjusting your search criteria or filters.</p>
+          </div>
+
+          <!-- Filters -->
+          <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+              <label for="availabilityFilter" class="form-label"
+                >Availability</label
+              >
+              <select id="availabilityFilter" class="form-select">
+                <option value="">All</option>
+                <option value="available">Available Now</option>
+                <option value="limited">Limited Spots</option>
+              </select>
+            </div>
+
+            <div class="col-md-8">
+              <div class="filter-buttons">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-lg"
+                  id="generalBtn"
+                >
+                  <i class="bi bi-car-front me-2"></i>
+                  General Parking
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-lg"
+                  id="reservedBtn"
+                >
+                  <i class="bi bi-building me-2"></i>
+                  Reserved Parking
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Establishments -->
+      <div id="establishmentsContainer" class="row g-4">
+        <!-- Sample Establishment Card -->
+        <div class="col-md-6 col-lg-4">
+          <div class="establishment-card">
+            <div class="card-top-border"></div>
+            <div class="card-body">
+              <h5 class="card-title">Grand Hotel Manila</h5>
+              <p class="card-text">
+                5-star hotel in Makati with valet parking and 24/7 security.
+              </p>
+
+              <div class="parking-stats">
+                <div class="row">
+                  <div class="col-6">
+                    <span class="stat-number text-available">24</span>
+                    <small>Available</small>
+                  </div>
+                  <div class="col-6">
+                    <span class="stat-number text-occupied">12</span>
+                    <small>Occupied</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="price-display">₱150/hour</div>
+
+              <button
+                class="btn btn-reserve"
+                data-bs-toggle="modal"
+                data-bs-target="#reservationModal"
+              >
+                <i class="bi bi-calendar-check me-2"></i>Reserve Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add more establishment cards here -->
+      </div>
+
+      <!-- No Results -->
+      <div
+        id="noResults"
+        class="text-center text-white mt-5"
+        style="display: none"
+      >
+        <div class="display-6 mb-3">
+          <i class="bi bi-search"></i>
+        </div>
+        <h3>No establishments found</h3>
+        <p class="lead">Try adjusting your search criteria or filters.</p>
+      </div>
     </div>
 
     <!-- Reservation Modal -->
     <div class="modal fade" id="reservationModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">
-                        <i class="bi bi-calendar-check me-2"></i>
-                        Reserve Parking Spot
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                
-                <div class="modal-body">
-                    <div class="alert alert-info">
-                        <i class="bi bi-info-circle me-2"></i>
-                        <span id="modalEstablishmentName" class="fw-bold"></span>
-                    </div>
-                    
-                    <form id="reservationForm">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="customerName" class="form-label">Full Name *</label>
-                                <input type="text" class="form-control" id="customerName" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="customerEmail" class="form-label">Email *</label>
-                                <input type="email" class="form-control" id="customerEmail" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="customerPhone" class="form-label">Phone Number *</label>
-                                <input type="tel" class="form-control" id="customerPhone" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="vehiclePlate" class="form-label">License Plate *</label>
-                                <input type="text" class="form-control" id="vehiclePlate" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="arrivalDate" class="form-label">Arrival Date *</label>
-                                <input type="date" class="form-control" id="arrivalDate" required>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <label for="arrivalTime" class="form-label">Arrival Time *</label>
-                                <input type="time" class="form-control" id="arrivalTime" required>
-                            </div>
-                            
-                            <div class="col-12">
-                                <label for="duration" class="form-label">Duration *</label>
-                                <select class="form-select" id="duration" required>
-                                    <option value="">Select duration</option>
-                                    <option value="1">1 hour</option>
-                                    <option value="2">2 hours</option>
-                                    <option value="4">4 hours</option>
-                                    <option value="8">8 hours</option>
-                                    <option value="24">24 hours</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle me-1"></i>Cancel
-                    </button>
-                    <button type="button" class="btn btn-success" onclick="confirmReservation()">
-                        <i class="bi bi-check-circle me-1"></i>Confirm Reservation
-                    </button>
-                </div>
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="bi bi-calendar-check me-2"></i>
+              Reserve Parking Spot
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="alert alert-info">
+              <i class="bi bi-info-circle me-2"></i>
+              <span id="modalEstablishmentName" class="fw-bold"
+                >Grand Hotel Manila</span
+              >
             </div>
+
+            <form id="reservationForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="customerName" class="form-label"
+                    >Full Name *</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="customerName"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="customerEmail" class="form-label">Email *</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="customerEmail"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="customerPhone" class="form-label"
+                    >Phone Number *</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="customerPhone"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="vehiclePlate" class="form-label"
+                    >License Plate *</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="vehiclePlate"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="arrivalDate" class="form-label"
+                    >Arrival Date *</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="arrivalDate"
+                    required
+                  />
+                </div>
+
+                <div class="col-md-6">
+                  <label for="arrivalTime" class="form-label"
+                    >Arrival Time *</label
+                  >
+                  <input
+                    type="time"
+                    class="form-control"
+                    id="arrivalTime"
+                    required
+                  />
+                </div>
+
+                <div class="col-12">
+                  <label for="duration" class="form-label">Duration *</label>
+                  <select class="form-select" id="duration" required>
+                    <option value="">Select duration</option>
+                    <option value="1">1 hour</option>
+                    <option value="2">2 hours</option>
+                    <option value="4">4 hours</option>
+                    <option value="8">8 hours</option>
+                    <option value="24">24 hours</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle me-1"></i>Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="confirmReservation()"
+            >
+              <i class="bi bi-check-circle me-1"></i>Confirm Reservation
+            </button>
+          </div>
         </div>
+      </div>
     </div>
+
     <!-- Room Booking Modal -->
     <div class="modal fade" id="roomBookingModal" tabindex="-1">
-        <div class="modal-dialog">
+      <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+          <div class="modal-header">
             <h5 class="modal-title">Book a Room</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
             <form id="roomBookingForm">
-                <div class="mb-3">
+              <div class="mb-3">
                 <label class="form-label">Room Type</label>
                 <select class="form-select" required>
-                    <option value="">Select Room</option>
-                    <option>Standard Room</option>
-                    <option>Deluxe Room</option>
-                    <option>Suite</option>
+                  <option value="">Select Room</option>
+                  <option>Standard Room</option>
+                  <option>Deluxe Room</option>
+                  <option>Suite</option>
                 </select>
-                </div>
-                <div class="mb-3">
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Check-in Date</label>
-                <input type="date" class="form-control" required>
-                </div>
-                <div class="mb-3">
+                <input type="date" class="form-control" required />
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Check-out Date</label>
-                <input type="date" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Confirm Room Booking</button>
+                <input type="date" class="form-control" required />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">
+                Confirm Room Booking
+              </button>
             </form>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-  
+
     <!-- Breakdown Charges Modal -->
     <div class="modal fade" id="chargesModal" tabindex="-1">
-        <div class="modal-dialog">
+      <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-info text-white">
+          <div class="modal-header bg-info text-white">
             <h5 class="modal-title">
-                <i class="bi bi-receipt me-2"></i> Breakdown of Charges
+              <i class="bi bi-receipt me-2"></i> Breakdown of Charges
             </h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-            <p><strong>Establishment:</strong> <span id="chargesEstablishment"></span></p>
-            <p><strong>Duration:</strong> <span id="chargesDuration"></span> hour(s)</p>
-            <hr>
-            <p>Room Fee: ₱<span id="roomFee"></span></p>
-            <p>Parking Fee: ₱<span id="parkingFee"></span></p>
-            <p>Service Fee (10%): ₱<span id="serviceFee"></span></p>
-            <hr>
-            <h5>Total: ₱<span id="totalCharges"></span></h5>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                <i class="bi bi-x-circle me-1"></i>Cancel
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              <strong>Establishment:</strong>
+              <span id="chargesEstablishment">Grand Hotel Manila</span>
+            </p>
+            <p>
+              <strong>Duration:</strong>
+              <span id="chargesDuration">2</span> hour(s)
+            </p>
+            <hr />
+            <p>Room Fee: ₱<span id="roomFee">2500</span></p>
+            <p>Parking Fee: ₱<span id="parkingFee">300</span></p>
+            <p>Service Fee (10%): ₱<span id="serviceFee">280</span></p>
+            <hr />
+            <h5>Total: ₱<span id="totalCharges">3080</span></h5>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              <i class="bi bi-x-circle me-1"></i>Cancel
             </button>
-            <button type="button" class="btn btn-success" onclick="finalizeReservation()">
-                <i class="bi bi-check-circle me-1"></i>Confirm Booking
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="finalizeReservation()"
+            >
+              <i class="bi bi-check-circle me-1"></i>Confirm Booking
             </button>
-            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-    
-    
-    
+
+    <!-- Footer Navigation -->
+    <footer class="footer-nav">
+      <nav class="nav-container">
+        <a href="hometab.html" class="nav-item" data-page="home">
+          <svg class="nav-icon home-icon" viewBox="0 0 24 24">
+            <path
+              d="M3 9.5L12 1l9 8.5v11a1 1 0 01-1 1H4a1 1 0 01-1-1v-11z"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <path
+              d="M9 22V12h6v10"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+          </svg>
+          <span class="nav-label">Home</span>
+        </a>
+
+        <a href="maptab.html" class="nav-item" data-page="map">
+          <svg class="nav-icon map-icon" viewBox="0 0 24 24">
+            <path
+              d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle
+              cx="12"
+              cy="10"
+              r="3"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+          </svg>
+          <span class="nav-label">Map</span>
+        </a>
+
+        <a class="nav-item active" data-page="booking">
+          <svg class="nav-icon booking-icon" viewBox="0 0 24 24">
+            <rect
+              x="3"
+              y="4"
+              width="18"
+              height="18"
+              rx="2"
+              ry="2"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <line
+              x1="16"
+              y1="2"
+              x2="16"
+              y2="6"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <line
+              x1="8"
+              y1="2"
+              x2="8"
+              y2="6"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <line
+              x1="3"
+              y1="10"
+              x2="21"
+              y2="10"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <path
+              d="M8 14l2 2 4-4"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+          </svg>
+          <span class="nav-label">Booking</span>
+        </a>
+
+        <a href="profiletab.html" class="nav-item" data-page="profile">
+          <svg class="nav-icon profile-icon" viewBox="0 0 24 24">
+            <path
+              d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle
+              cx="12"
+              cy="7"
+              r="4"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+          </svg>
+          <span class="nav-label">Profile</span>
+        </a>
+      </nav>
+    </footer>
+
     <!-- Bootstrap JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="JS/parkreservation.js">
-    </script>
-</body>
+    <script src="JS/parkreservation.js"></script>
+  </body>
 </html>

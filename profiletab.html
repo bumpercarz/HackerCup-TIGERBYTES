@@ -1,80 +1,605 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TigerBytes - Profile</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<header>
-    <div class="profile-picture"></div>
-    <h2>John Doe</h2>
-    <p>john.doe@gmail.com</p>
-</header>
+      body {
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          #4a90e2 0%,
+          #357abd 25%,
+          #2c5aa0 50%,
+          #4a90e2 75%,
+          #6bb6ff 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow-x: hidden;
+        padding-bottom: 100px;
+      }
 
-<div class="profile-info">
-    <div class="section">
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      header {
+        background: rgba(248, 249, 250, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 0 0 25px 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        margin: 20px 15px 0;
+        position: relative;
+        z-index: 2;
+      }
+
+      .profile-picture {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #4a90e2 0%, #357abd 100%);
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+        border: 4px solid rgba(255, 255, 255, 0.9);
+        position: relative;
+      }
+
+      .profile-picture::after {
+        content: "👤";
+        font-size: 2.5rem;
+        color: white;
+      }
+
+      header h2 {
+        color: #4a90e2;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+      }
+
+      header p {
+        color: #666;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      .profile-info {
+        flex: 1;
+        padding: 30px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .section {
+        background: rgba(248, 249, 250, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 25px 20px;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .section-title {
+        color: #4a90e2;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        letter-spacing: -0.3px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .section-title::before {
+        content: "";
+        width: 4px;
+        height: 20px;
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        border-radius: 2px;
+      }
+
+      .section p {
+        color: #333;
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+
+      .section p:last-child {
+        margin-bottom: 0;
+      }
+
+      .personal-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px 30px;
+        margin-top: 5px;
+      }
+
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .info-label {
+        color: #666;
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.2px;
+      }
+
+      .info-value {
+        color: #333;
+        font-size: 0.95rem;
+        font-weight: 400;
+        margin: 0;
+      }
+
+      .vehicle {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 15px 18px;
+        border-radius: 15px;
+        color: #333;
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+        font-weight: 500;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .vehicle:last-child {
+        margin-bottom: 0;
+      }
+
+      .vehicle:hover {
+        background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+        transform: translateX(5px);
+      }
+
+      .settings-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 0;
+        color: #333;
+        font-size: 0.95rem;
+        font-weight: 400;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+      }
+
+      .settings-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .settings-item:hover {
+        background: rgba(74, 144, 226, 0.1);
+        color: #4a90e2;
+        transform: translateX(5px);
+      }
+
+      .settings-item span {
+        font-size: 1.2rem;
+      }
+
+      /* Footer Navigation */
+      .footer-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px 0;
+        z-index: 1000;
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #6c757d;
+        transition: all 0.3s ease;
+        padding: 5px;
+        border-radius: 10px;
+      }
+
+      .nav-item.active,
+      .nav-item:hover {
+        color: #667eea;
+        background: rgba(102, 126, 234, 0.1);
+      }
+
+      .nav-icon {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 4px;
+      }
+
+      .nav-label {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      /* iPhone 14 Pro Max specific optimizations */
+      @media screen and (max-width: 430px) and (min-height: 800px) {
+        header {
+          border-radius: 0 0 35px 35px;
+          margin: 15px 10px 0;
+          padding: 35px 20px;
+        }
+
+        .section {
+          border-radius: 25px;
+          margin: 0 10px;
+          padding: 30px 25px;
+        }
+
+        .profile-picture {
+          width: 110px;
+          height: 110px;
+          border: 5px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .profile-picture::after {
+          font-size: 3rem;
+        }
+
+        header h2 {
+          font-size: 2rem;
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .control-panel,
+        .parking-section {
+          margin: 10px;
+        }
+
+        .search-container {
+          gap: 10px;
+        }
+
+        .button-group {
+          flex-direction: column;
+        }
+
+        .section-title {
+          font-size: 1.5rem;
+        }
+
+        .parking-card {
+          margin-bottom: 10px;
+        }
+
+        .stat-number {
+          font-size: 1.3rem;
+        }
+      }
+
+      /* Loading and Empty States */
+      .loading-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: white;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: white;
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        opacity: 0.7;
+      }
+
+      /* Enhanced container for very narrow screens */
+      @media (max-width: 380px) {
+        header {
+          margin: 5px 5px 0;
+        }
+
+        .section {
+          margin: 0;
+        }
+
+        .nav-container {
+          padding: 8px 15px 15px;
+        }
+      }
+
+      /* Landscape mode adjustments */
+      @media (orientation: landscape) and (max-height: 500px) {
+        body {
+          padding-bottom: 80px;
+        }
+
+        header {
+          padding: 20px 15px;
+        }
+
+        .profile-picture {
+          width: 80px;
+          height: 80px;
+        }
+
+        .profile-picture::after {
+          font-size: 2rem;
+        }
+
+        header h2 {
+          font-size: 1.5rem;
+        }
+
+        .profile-info {
+          padding: 20px 15px;
+          gap: 15px;
+        }
+
+        .section {
+          padding: 20px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="profile-picture"></div>
+      <h2>John Doe</h2>
+      <p>john.doe@gmail.com</p>
+    </header>
+
+    <div class="profile-info">
+      <div class="section">
         <div class="section-title">Personal Information</div>
-        <p>Full Name: Juan Dela Cruz</p>
-        <p>Birthday: April 28, 1999</p>
-        <p>Phone: +63 123 456 7890</p>
-        <p>Address: April 28, 1999</p>
-    </div>
+        <div class="personal-info-grid">
+          <div class="info-item">
+            <div class="info-label">Full Name</div>
+            <div class="info-value">Juan Dela Cruz</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Birthday</div>
+            <div class="info-value">April 28, 1999</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Phone</div>
+            <div class="info-value">+63 123 456 7890</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Address</div>
+            <div class="info-value">Quezon City, Metro Manila</div>
+          </div>
+        </div>
+      </div>
 
-    <div class="section">
+      <div class="section">
         <div class="section-title">My Vehicles</div>
-        <div class="vehicle">Toyota Vios 2020 - ABC-1234 • White</div>
-        <div class="vehicle">Honda CR-V 2019 - DEF-5678 • Black</div>
-    </div>
+        <div class="vehicle">🚗 Toyota Vios 2020 - ABC-1234 • White</div>
+        <div class="vehicle">🚙 Honda CR-V 2019 - DEF-5678 • Black</div>
+      </div>
 
-    <div class="section">
+      <div class="section">
         <div class="section-title">Settings</div>
-        <p>🔔 Notifications</p>
-        <p>📄 Sign Out</p>
+        <div class="settings-item">
+          <span>🔔</span>
+          <span>Notifications</span>
+        </div>
+        <div class="settings-item">
+          <span>📄</span>
+          <span>Sign Out</span>
+        </div>
+      </div>
     </div>
-</div>
 
-<!-- Footer Navigation -->
-<footer class="footer-nav">
-    <nav class="nav-container">
-        <a href="hometab.html" class="nav-item" data-page="home">
-            <svg class="nav-icon home-icon" viewBox="0 0 24 24">
-                <path d="M3 9.5L12 1l9 8.5v11a1 1 0 01-1 1H4a1 1 0 01-1-1v-11z" stroke="currentColor" stroke-width="2" fill="none"/>
-                <path d="M9 22V12h6v10" stroke="currentColor" stroke-width="2" fill="none"/>
-            </svg>
-            <span class="nav-label">Home</span>
+    <!-- Footer Navigation -->
+    <footer class="footer-nav">
+      <nav class="nav-container">
+        <a href="hometab.html" class="nav-item active" data-page="home">
+          <svg class="nav-icon home-icon" viewBox="0 0 24 24">
+            <path
+              d="M3 9.5L12 1l9 8.5v11a1 1 0 01-1 1H4a1 1 0 01-1-1v-11z"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <path
+              d="M9 22V12h6v10"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+          </svg>
+          <span class="nav-label">Home</span>
         </a>
-        
+
         <a href="maptab.html" class="nav-item" data-page="map">
-            <svg class="nav-icon map-icon" viewBox="0 0 24 24">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2" fill="none"/>
-                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
-            </svg>
-            <span class="nav-label">Map</span>
+          <svg class="nav-icon map-icon" viewBox="0 0 24 24">
+            <path
+              d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle
+              cx="12"
+              cy="10"
+              r="3"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+          </svg>
+          <span class="nav-label">Map</span>
         </a>
-        
-        <a href="reservationtab.html" class="nav-item" data-page="booking">
-            <svg class="nav-icon booking-icon" viewBox="0 0 24 24">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
-                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
-                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
-                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
-                <path d="M8 14l2 2 4-4" stroke="currentColor" stroke-width="2" fill="none"/>
-            </svg>
-            <span class="nav-label">Booking</span>
-        </a>
-        
-        <a class="nav-item active" data-page="profile">
-            <svg class="nav-icon profile-icon" viewBox="0 0 24 24">
-                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" fill="none"/>
-                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none"/>
-            </svg>
-            <span class="nav-label">Profile</span>
-        </a>
-    </nav>
-</footer>
 
-</body>
+        <a href="reservationtab.html" class="nav-item" data-page="booking">
+          <svg class="nav-icon booking-icon" viewBox="0 0 24 24">
+            <rect
+              x="3"
+              y="4"
+              width="18"
+              height="18"
+              rx="2"
+              ry="2"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <line
+              x1="16"
+              y1="2"
+              x2="16"
+              y2="6"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <line
+              x1="8"
+              y1="2"
+              x2="8"
+              y2="6"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <line
+              x1="3"
+              y1="10"
+              x2="21"
+              y2="10"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <path
+              d="M8 14l2 2 4-4"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+          </svg>
+          <span class="nav-label">Booking</span>
+        </a>
+
+        <a class="nav-item active" data-page="profile">
+          <svg class="nav-icon profile-icon" viewBox="0 0 24 24">
+            <path
+              d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle
+              cx="12"
+              cy="7"
+              r="4"
+              stroke="currentColor"
+              stroke-width="2"
+              fill="none"
+            />
+          </svg>
+          <span class="nav-label">Profile</span>
+        </a>
+      </nav>
+    </footer>
+
+    <script>
+      // Navigation functionality
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.addEventListener("click", function (e) {
+          // Remove active class from all items
+          document
+            .querySelectorAll(".nav-item")
+            .forEach((nav) => nav.classList.remove("active"));
+          // Add active class to clicked item
+          this.classList.add("active");
+        });
+      });
+
+      // Settings items interaction
+      document.querySelectorAll(".settings-item").forEach((item) => {
+        item.addEventListener("click", function () {
+          const text = this.textContent.trim();
+          if (text.includes("Sign Out")) {
+            // Handle sign out
+            console.log("Sign out clicked");
+            // Redirect to login page
+            // window.location.href = 'login.html';
+          } else if (text.includes("Notifications")) {
+            // Handle notifications
+            console.log("Notifications clicked");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
